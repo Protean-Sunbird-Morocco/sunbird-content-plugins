@@ -69,8 +69,12 @@
                           <i class="trash large icon delete-icon"></i>
                         </a>
                         <div class="ui radio correct-answer">
-                          <input type="radio" id="{{$index}}" class="right-ans-radio" name="correctans_{{$index}}" ng-checked="value.isCorrect" ng-model="$parent.selectedOption"
-                            value="{{$index}}" ng-click="generateTelemetry({type: 'TOUCH', id: 'toggle', target: {id: 'questionunit-mcq-correct-ans', ver: '', type: 'toggle'}});"
+                          <input type="checkbox" 
+                            id="{{$index}}" 
+                            class="right-ans-radio" 
+                            name="correctans_{{$index}}" 
+                            ng-model="value.isCorrect"
+                            ng-change="generateTelemetry({type: 'TOUCH', id: 'toggle', target: {id: 'questionunit-mcq-correct-ans', ver: '', type: 'toggle'}})"
                           />
                           <label for="{{$index}}" ng-class="{'has-success-text':selLbl == 'error' , 'has-error-text':selLbl == 'success' }">Mark as right answer</label>
                         </div>

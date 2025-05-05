@@ -71,32 +71,38 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
   evaluateQuestion: function (event) {
     var instance = this;
     var callback = event.target;
-    var correctAnswer = false, telValues = {}, selectedAnsData, selectedAns, result = {}, option;
-    option = MCQController.pluginInstance._question.data.options;// eslint-disable-line no-undef
-    selectedAnsData = option[MCQController.pluginInstance._selectedIndex]; // eslint-disable-line no-undef
-    selectedAns = _.isUndefined(selectedAnsData) ? false : selectedAnsData.isCorrect;
-    option.forEach(function (option) { // eslint-disable-line no-undef
-      if (option.isCorrect === selectedAns) {
-        correctAnswer = option.isCorrect;
-      }
+    var correctAnswer = false, telValues = {}, result = {}, option;
+    option = MCQController.pluginInstance._question.data.options; // eslint-disable-line no-undef
+
+    // Get all correct answer indices
+    var correctIndices = option.map((opt, index) => opt.isCorrect ? index : null).filter(index => index !== null);
+    // Check if selected indices match all correct indices
+    var selectedIndices = MCQController.pluginInstance._selectedIndices;
+
+    correctAnswer = _.isEqual(selectedIndices.sort(), correctIndices.sort());
+
+    // Prepare telemetry values for each selected index
+    selectedIndices.forEach(function (selectedIndex) {
+        var selectedAnsData = option[selectedIndex];
+        telValues['option' + selectedIndex] = selectedAnsData.image.length > 0 ? selectedAnsData.image : selectedAnsData.text;
     });
-    if (!_.isUndefined(MCQController.pluginInstance._selectedIndex)) telValues['option' + MCQController.pluginInstance._selectedIndex] = selectedAnsData.image.length > 0 ? selectedAnsData.image : selectedAnsData.text; // eslint-disable-line no-undef
+
     result = {
-      eval: correctAnswer,
-      state: {
-        val: MCQController.pluginInstance._selectedIndex, // eslint-disable-line no-undef
-        options: option // eslint-disable-line no-undef
-      },
-      score: correctAnswer ? MCQController.pluginInstance._question.config.max_score : 0, // eslint-disable-line no-undef
-      params: instance.getTelemetryParams(),
-      values: instance.getTelemetryResValues(),
-      type: "mcq"
+        eval: correctAnswer,
+        state: {
+            val: selectedIndices, // Store the array of selected indices
+            options: option // eslint-disable-line no-undef
+        },
+        score: correctAnswer ? MCQController.pluginInstance._question.config.max_score : 0, // eslint-disable-line no-undef
+        params: instance.getTelemetryParams(),
+        values: instance.getTelemetryResValues(),
+        type: "mcq"
     };
     if (_.isFunction(callback)) {
-      callback(result);
+        callback(result);
     }
-  },
-  getTelemetryParams: function() {
+},
+  getTelemetryParams: function () {
     // Any change in the index value affects resvalues as well
     var instance = this;
     var params = [], questionData = MCQController.pluginInstance._question.data;
@@ -159,13 +165,32 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
    * @param {Integer} index from question set.
    */
   onOptionSelected: function (event, index) {
-    var value, telValues = {};
-    value = this._question.data.options[index];
-    this._selectedIndex = index; // eslint-disable-line no-undef
-    telValues['option' + index] = value.image.length > 0 ? value.image : value.text.replace( /(<([^>]+)>)/ig, '').replace(/\n/g, '').trim();
+    this._selectedIndices = index;
+    var telValues = {};
+    var selected_indices = [];
+
+    index.forEach(index => {
+        // Toggle the index in the selectedIndices array
+        var selectedIndexPosition = selected_indices.indexOf(index);
+        if (selectedIndexPosition > -1) {
+            // If index is already selected, remove it
+            selected_indices.splice(selectedIndexPosition, 1);
+        } else {
+            // If index is not selected, add it
+            selected_indices.push(index);
+        }
+    });
+
+    // Only add the most recently appended index to telemetry values
+    if (selected_indices.length > 0) {
+        var lastSelectedIndex = selected_indices[selected_indices.length - 1];
+        var lastSelectedValue = this._question.data.options[lastSelectedIndex];
+        telValues['option' + lastSelectedIndex] = lastSelectedValue.image.length > 0 ? lastSelectedValue.image : lastSelectedValue.text.replace(/(<([^>]+)>)/ig, '').replace(/\n/g, '').trim();
+    }
+
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.RESPONSE, { // eslint-disable-line no-undef
-      "type": "MCQ",
-      "values": [telValues]
+        "type": "MCQ",
+        "values": [telValues]
     });
   },
   logTelemetryInteract: function (event) {

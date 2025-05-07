@@ -73,13 +73,21 @@ MCQController.grid.onOptionSelected = function (event, index) {
     var optElt = $(event.target);
     MCQController.grid.optionStyleUponClick(optElt);
 
-    // Create an array to store selected indices
-    var selectedIndices = [];
+   // Initialize _selectedIndices as array if undefined
+   if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+    MCQController.pluginInstance._selectedIndices = [];
+}
+
+// Reset selected indices array
+MCQController.pluginInstance._selectedIndices = [];
 
     // Iterate over all options to find selected ones
     $('.mcq-grid-option').each(function (i, element) {
         if ($(element).hasClass('selected')) {
-            selectedIndices.push(i);
+             // Only push if index doesn't exist in array
+             if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                MCQController.pluginInstance._selectedIndices.push(i);
+            }
         }
     });
 
@@ -307,17 +315,25 @@ MCQController.onSelectingOption = function (element, index) {
 MCQController.horizontal.onOptionSelected = function (element, index) {
     MCQController.horizontal.optionStyleUponClick(element);
 
-    // Create an array to store selected indices
-    var selectedIndices = [];
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
 
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
+    
     // Iterate over all options to find selected ones
     $('.option-block').each(function (i, element) {
         if ($(element).hasClass('selected')) {
-            selectedIndices.push(i);
+            // Only push if index doesn't exist in array
+            if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                MCQController.pluginInstance._selectedIndices.push(i);
+            }
         }
     });
 
-    MCQController.pluginInstance.onOptionSelected(element, selectedIndices);
+    // Play audio if exists
     if (MCQController.pluginInstance._question.data.options[index].audio) {
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio
@@ -483,13 +499,20 @@ MCQController.vertical2.onOptionSelected = function (event, index) {
     var optionElement = $(event.target);
     MCQController.vertical2.optionStyleUponClick(optionElement);
 
-    // Create an array to store selected indices
-    var selectedIndices = [];
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
+
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
 
     // Iterate over all options to find selected ones
     $('.text-option').each(function (i, element) {
         if ($(element).hasClass('opt-selected')) {
-            selectedIndices.push(i);
+            if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                MCQController.pluginInstance._selectedIndices.push(i);
+            }
         }
     });
 
@@ -593,12 +616,20 @@ MCQController.grid2.onOptionSelected = function (event, index) {
     var optElt = $(event.target);
     MCQController.grid2.optionStyleUponClick(optElt);
     // Create an array to store selected indices
-    var selectedIndices = [];
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
+
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
 
     // Iterate over all options to find selected ones
     $('.mcq2-2-option').each(function (i, element) {
         if ($(element).hasClass('opt-selected')) {
-            selectedIndices.push(i);
+            if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                MCQController.pluginInstance._selectedIndices.push(i);
+            }
         }
     });
 

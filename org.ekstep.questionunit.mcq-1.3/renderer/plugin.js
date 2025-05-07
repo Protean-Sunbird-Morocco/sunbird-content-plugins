@@ -20,6 +20,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
   },
   _defaultImageIcon: "default-image.png",
   _defaultAudioIcon: "audio.png",
+  _selectedIndices: undefined,
   _selectedIndex: undefined,
   _lastAudio: undefined,
   _currentAudio: undefined,
@@ -33,6 +34,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
    * @param {Object} event from question set.
    */
   preQuestionShow: function (event) {
+    this._selectedIndices = [];
     this._super(event);
     if (this._question.state && _.has(this._question.state, 'val')) {
       this._question.data.options = this._question.state.options;
@@ -50,19 +52,24 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
   postQuestionShow: function () {
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESS);// eslint-disable-line no-undef
     MCQController.renderQuestion(); // eslint-disable-line no-undef
+
+    
     if (this._question.state && _.has(this._question.state, 'val')) {
-      this._selectedIndex = this._question.state.val;
-      var selectedIndex = this._selectedIndex;
-      var layout = this._question.config.layout;
-      _.each($(".org-ekstep-questionunit-mcq-option-element"), function(optionElement, index){
-        if(index == selectedIndex){
-          MCQController[layout.toLowerCase()].optionStyleUponClick(optionElement);
-        }
-      })
+      // this._selectedIndices = this._question.state.val;
+        this._selectedIndices = this._question.state.val;
+        var selectedIndices = Array.isArray(this._selectedIndices) ? this._selectedIndices : [this._selectedIndices];
+        var layout = this._question.config.layout;
+        
+        _.each($(".org-ekstep-questionunit-mcq-option-element"), function(optionElement, index) {
+            // Check if current index exists in the selectedIndices array
+            if (selectedIndices.includes(index)) {
+                MCQController[layout.toLowerCase()].optionStyleUponClick(optionElement);
+            }
+        });
     } else {
-      this._selectedIndex = undefined;
+        this._selectedIndices = [];
     }
-  },
+},
   /**
    * Question evalution
    * @memberof org.ekstep.questionunit.mcq
@@ -84,13 +91,13 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     // Prepare telemetry values for each selected index
     selectedIndices.forEach(function (selectedIndex) {
         var selectedAnsData = option[selectedIndex];
-        telValues['option' + selectedIndex] = selectedAnsData.image.length > 0 ? selectedAnsData.image : selectedAnsData.text;
+        telValues['option' + selectedIndex] = selectedAnsData?.image.length > 0 ? selectedAnsData?.image : selectedAnsData?.text;
     });
 
     result = {
         eval: correctAnswer,
         state: {
-            val: selectedIndices, // Store the array of selected indices
+            val: _.isEmpty(selectedIndices)? undefined:_.uniq(selectedIndices),  // Store the array of selected indices
             options: option // eslint-disable-line no-undef
         },
         score: correctAnswer ? MCQController.pluginInstance._question.config.max_score : 0, // eslint-disable-line no-undef
@@ -119,11 +126,14 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
   },
   getTelemetryResValues: function() {
     var resValues = [];
-    var selectedIndex = MCQController.pluginInstance._selectedIndex;
-    var value = {};
-    if (!_.isUndefined(selectedIndex)){
-      value[selectedIndex + 1] = this.getTelemetryParamsValue(MCQController.pluginInstance._question.data.options[selectedIndex]);
-      resValues.push(value);
+    var selectedIndices = MCQController.pluginInstance._selectedIndices;
+    
+    if (!_.isUndefined(selectedIndices) && Array.isArray(selectedIndices)) {
+      selectedIndices.forEach(function(selectedIndex) {
+        var value = {};
+        value[selectedIndex + 1] = this.getTelemetryParamsValue(MCQController.pluginInstance._question.data.options[selectedIndex]);
+        resValues.push(value);
+      }, this);
     }
       
     return resValues;
@@ -165,7 +175,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
    * @param {Integer} index from question set.
    */
   onOptionSelected: function (event, index) {
-    this._selectedIndices = index;
+    // this._selectedIndices = index;
     var telValues = {};
     var selected_indices = [];
 
@@ -185,7 +195,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     if (selected_indices.length > 0) {
         var lastSelectedIndex = selected_indices[selected_indices.length - 1];
         var lastSelectedValue = this._question.data.options[lastSelectedIndex];
-        telValues['option' + lastSelectedIndex] = lastSelectedValue.image.length > 0 ? lastSelectedValue.image : lastSelectedValue.text.replace(/(<([^>]+)>)/ig, '').replace(/\n/g, '').trim();
+        telValues['option' + lastSelectedIndex] = lastSelectedValue?.image.length > 0 ? lastSelectedValue?.image : lastSelectedValue?.text.replace(/(<([^>]+)>)/ig, '').replace(/\n/g, '').trim();
     }
 
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.RESPONSE, { // eslint-disable-line no-undef

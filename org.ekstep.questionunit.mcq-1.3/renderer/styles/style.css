@@ -1489,7 +1489,7 @@ span.qc-option-txt {
 
 .question-text {
     max-height: 30%;
-    overflow: hidden;
+    overflow: scroll;
     word-break: break-all;
     margin-top: 10%;
     width: 100%;

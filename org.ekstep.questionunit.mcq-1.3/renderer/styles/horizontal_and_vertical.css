@@ -196,9 +196,10 @@
     width: 100%;
     position: relative;
     display: table;
+    padding-top: 5%;
 }
 .mcq-content-container .outer-option-container.horizontal {
-    padding-top: 2.5%;
+    padding-top: 4.5%;
     margin-right: 10.40%;
     margin-left: 10.40%;
     height: 76.5%;

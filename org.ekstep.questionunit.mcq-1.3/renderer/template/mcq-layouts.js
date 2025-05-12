@@ -91,8 +91,6 @@ MCQController.pluginInstance._selectedIndices = [];
         }
     });
 
-    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
-
     if (MCQController.pluginInstance._question.data.options[index].audio) {
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio
@@ -516,8 +514,6 @@ MCQController.vertical2.onOptionSelected = function (event, index) {
         }
     });
 
-    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
-
 }
 
 /** Grid2 */
@@ -633,7 +629,6 @@ MCQController.grid2.onOptionSelected = function (event, index) {
         }
     });
 
-    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
     if (MCQController.pluginInstance._question.data.options[index].audio)
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio

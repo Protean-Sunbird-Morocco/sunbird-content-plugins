@@ -297,19 +297,19 @@ MCQController.horizontal.optionStyleUponClick = function (element) {
  */
 MCQController.horizontal.onSelectOption = function (element, index) {
     MCQController.horizontal.optionStyleUponClick(element);
-    if (MCQController.pluginInstance._question.data.options[index].audio) {
-        MCQController.pluginInstance.playAudio({
-            src: MCQController.pluginInstance._question.data.options[index].audio
-        });
-    }
+    // if (MCQController.pluginInstance._question.data.options[index].audio) {
+    //     MCQController.pluginInstance.playAudio({
+    //         src: MCQController.pluginInstance._question.data.options[index].audio
+    //     });
+    // }
 }
 MCQController.onSelectingOption = function (element, index) {
     MCQController.horizontal.optionStyleUponClick(element);
-    if (MCQController.pluginInstance._question.data.options[index].audio) {
-        MCQController.pluginInstance.playAudio({
-            src: MCQController.pluginInstance._question.data.options[index].audio
-        });
-    }
+    // if (MCQController.pluginInstance._question.data.options[index].audio) {
+    //     MCQController.pluginInstance.playAudio({
+    //         src: MCQController.pluginInstance._question.data.options[index].audio
+    //     });
+    // }
     MCQController.imagegrid.playAudioHorizontal(index,'play');
 }
 MCQController.horizontal.onOptionSelected = function (element, index) {

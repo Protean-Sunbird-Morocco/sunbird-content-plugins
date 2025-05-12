@@ -91,7 +91,7 @@ MCQController.pluginInstance._selectedIndices = [];
         }
     });
 
-    MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
+    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
 
     if (MCQController.pluginInstance._question.data.options[index].audio) {
         MCQController.pluginInstance.playAudio({
@@ -516,7 +516,7 @@ MCQController.vertical2.onOptionSelected = function (event, index) {
         }
     });
 
-    MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
+    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
 
 }
 
@@ -633,7 +633,7 @@ MCQController.grid2.onOptionSelected = function (event, index) {
         }
     });
 
-    MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
+    // MCQController.pluginInstance.onOptionSelected(event, selectedIndices);
     if (MCQController.pluginInstance._question.data.options[index].audio)
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio

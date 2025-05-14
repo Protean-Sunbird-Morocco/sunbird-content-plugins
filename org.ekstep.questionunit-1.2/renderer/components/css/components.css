@@ -133,7 +133,7 @@ body {
     background: white;
     position: absolute;
     z-index: 1;
-    height: 30vh !important;
+    height: 40vh !important;
 }
 
 .question-container .hiding-container .expand-container {

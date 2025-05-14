@@ -234,6 +234,7 @@ body {
     position: relative;
     overflow: auto;
     height: 100%;
+    padding-top: 5%;
 }
 .bg-graphics-2 .bg-circle.circle-left {
     left: -20vw;

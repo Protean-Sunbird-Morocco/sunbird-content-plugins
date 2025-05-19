@@ -352,6 +352,7 @@
     display: table-cell;
     vertical-align: middle;
     padding-left: 5%;
+    overflow: scroll;
 }
 mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.imagegrid-text-mcq{
     display: block;

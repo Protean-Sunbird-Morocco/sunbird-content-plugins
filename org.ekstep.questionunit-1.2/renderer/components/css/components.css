@@ -127,13 +127,13 @@ body {
 
 .question-container .hiding-container {
     width: 100%;
-    height: 100%;
     padding-left: 25%;
     padding-right: 10%;
-    overflow: hidden;
+    overflow: scroll;
     background: white;
     position: absolute;
     z-index: 1;
+    height: 40vh !important;
 }
 
 .question-container .hiding-container .expand-container {
@@ -234,6 +234,7 @@ body {
     position: relative;
     overflow: auto;
     height: 100%;
+    padding-top: 5%;
 }
 .bg-graphics-2 .bg-circle.circle-left {
     left: -20vw;
@@ -311,7 +312,7 @@ body {
     padding: 1.5% 5% 0% 5%;
     height: 35.7%;
     position: absolute;
-    overflow: hidden;
+    overflow: scroll;
     z-index: 2;
 }
 

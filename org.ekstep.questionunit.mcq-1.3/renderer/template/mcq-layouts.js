@@ -56,9 +56,9 @@ MCQController.grid.getRowCount = function (optsCount) {
 }
 
 MCQController.grid.optionStyleUponClick = function (element) {
-    $('.mcq-grid-option').removeClass('selected');
+    // Toggle selected class instead of removing from all
     var optElt = $(element).closest('.mcq-grid-option');
-    if (optElt) optElt.addClass('selected');
+    if (optElt) optElt.toggleClass('selected');
 }
 
 /**
@@ -69,14 +69,45 @@ MCQController.grid.optionStyleUponClick = function (element) {
  * @param {number} index
  */
 MCQController.grid.onOptionSelected = function (event, index) {
-    // clear all selected options and select this option
+    // Toggle selection for this option
     var optElt = $(event.target);
     MCQController.grid.optionStyleUponClick(optElt);
-    MCQController.pluginInstance.onOptionSelected(event, index);
-    if (MCQController.pluginInstance._question.data.options[index].audio)
+
+   // Initialize _selectedIndices as array if undefined
+   if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+    MCQController.pluginInstance._selectedIndices = [];
+}
+
+// Reset selected indices array
+MCQController.pluginInstance._selectedIndices = [];
+const options = MCQController.pluginInstance._question.data.options;
+    const correctOptionsCount = options.filter(opt => opt.isCorrect).length;
+    const isMultipleCorrect = correctOptionsCount > 1;
+    
+    if (!isMultipleCorrect) {
+        // Single select mode - remove selection from all other options
+        $('.mcq-grid-option').removeClass('selected');
+        $(event.target).closest('.mcq-grid-option').addClass('selected');
+        
+        // Update selected indices for single select
+        MCQController.pluginInstance._selectedIndices = [index];
+    }else{
+        // Iterate over all options to find selected ones
+        $('.mcq-grid-option').each(function (i, element) {
+            if ($(element).hasClass('selected')) {
+                // Only push if index doesn't exist in array
+                if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                    MCQController.pluginInstance._selectedIndices.push(i);
+                }
+            }
+        });
+    }
+
+    if (MCQController.pluginInstance._question.data.options[index].audio) {
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio
         });
+    }
 }
 
 /**
@@ -265,8 +296,9 @@ MCQController.horizontal.getOptionLayout = function (layout, question) {
           </div>'
 }
 MCQController.horizontal.optionStyleUponClick = function (element) {
-    $('.option-block').removeClass('selected');
-    $(element).addClass('selected');
+    // Toggle selected class instead of removing from all
+    var optElt = $(element).closest('.option-block');
+    if (optElt) optElt.toggleClass('selected');
 }
 /**
  * called when the option in `horizontal` or `vertical` layout is selected
@@ -275,20 +307,60 @@ MCQController.horizontal.optionStyleUponClick = function (element) {
  */
 MCQController.horizontal.onSelectOption = function (element, index) {
     MCQController.horizontal.optionStyleUponClick(element);
-    if (MCQController.pluginInstance._question.data.options[index].audio) {
-        MCQController.pluginInstance.playAudio({
-            src: MCQController.pluginInstance._question.data.options[index].audio
-        });
-    }
+    // if (MCQController.pluginInstance._question.data.options[index].audio) {
+    //     MCQController.pluginInstance.playAudio({
+    //         src: MCQController.pluginInstance._question.data.options[index].audio
+    //     });
+    // }
 }
 MCQController.onSelectingOption = function (element, index) {
     MCQController.horizontal.optionStyleUponClick(element);
+    // if (MCQController.pluginInstance._question.data.options[index].audio) {
+    //     MCQController.pluginInstance.playAudio({
+    //         src: MCQController.pluginInstance._question.data.options[index].audio
+    //     });
+    // }
+    MCQController.imagegrid.playAudioHorizontal(index,'play');
+}
+MCQController.horizontal.onOptionSelected = function (element, index) {
+    MCQController.horizontal.optionStyleUponClick(element);
+
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
+
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
+    const options = MCQController.pluginInstance._question.data.options;
+    const correctOptionsCount = options.filter(opt => opt.isCorrect).length;
+    const isMultipleCorrect = correctOptionsCount > 1;
+    
+    if (!isMultipleCorrect) {
+        // Single select mode - remove selection from all other options
+        $('.option-block').removeClass('selected');
+        $(event.target).closest('.option-block').addClass('selected');
+        
+        // Update selected indices for single select
+        MCQController.pluginInstance._selectedIndices = [index];
+    }else{
+        // Iterate over all options to find selected ones
+        $('.option-block').each(function (i, element) {
+            if ($(element).hasClass('selected')) {
+                // Only push if index doesn't exist in array
+                if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                    MCQController.pluginInstance._selectedIndices.push(i);
+                }
+            }
+        });
+    }
+
+    // Play audio if exists
     if (MCQController.pluginInstance._question.data.options[index].audio) {
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio
         });
     }
-    MCQController.imagegrid.playAudioHorizontal(index,'play');
 }
 /** Vertical */
 /* vertical layout is exactly same as horizontal */
@@ -436,9 +508,9 @@ MCQController.vertical.postRender = function (question) {
 }
 
 MCQController.vertical2.optionStyleUponClick = function (element) {
-    $('.text-option').removeClass('opt-selected');
+    // Toggle selected class instead of removing from all
     var optElt = $(element).closest('.text-option');
-    if (optElt) optElt.addClass('opt-selected');
+    if (optElt) optElt.toggleClass('opt-selected');
 }
 /**
  * called when the option in `vertical2` layout is selected/tapped
@@ -448,7 +520,39 @@ MCQController.vertical2.optionStyleUponClick = function (element) {
 MCQController.vertical2.onOptionSelected = function (event, index) {
     var optionElement = $(event.target);
     MCQController.vertical2.optionStyleUponClick(optionElement);
-    MCQController.pluginInstance.onOptionSelected(event, index);
+
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
+
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
+    // Reset selected indices array
+    const options = MCQController.pluginInstance._question.data.options;
+    const correctOptionsCount = options.filter(opt => opt.isCorrect).length;
+    const isMultipleCorrect = correctOptionsCount > 1;
+    
+    if (!isMultipleCorrect) {
+        // Single select mode - remove selection from all other options
+        $('.text-option').removeClass('opt-selected');
+        $(event.target).closest('.text-option').addClass('opt-selected');
+        
+        // Update selected indices for single select
+        MCQController.pluginInstance._selectedIndices = [index];
+    }
+    else{
+
+        // Iterate over all options to find selected ones
+        $('.text-option').each(function (i, element) {
+            if ($(element).hasClass('opt-selected')) {
+                if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                    MCQController.pluginInstance._selectedIndices.push(i);
+                }
+            }
+        });
+        
+    }
 }
 
 /** Grid2 */
@@ -534,9 +638,9 @@ MCQController.grid2.getOption = function (option, key) {
 }
 
 MCQController.grid2.optionStyleUponClick = function (element) {
-    $('.mcq2-2-option').removeClass('opt-selected');
+    // Toggle selected class instead of removing from all
     var optElt = $(element).closest('.mcq2-2-option');
-    if (optElt) optElt.addClass('opt-selected');
+    if (optElt) optElt.toggleClass('opt-selected');
 }
 /**
  * called when the option in `grid2` layout is selected
@@ -546,7 +650,36 @@ MCQController.grid2.optionStyleUponClick = function (element) {
 MCQController.grid2.onOptionSelected = function (event, index) {
     var optElt = $(event.target);
     MCQController.grid2.optionStyleUponClick(optElt);
-    MCQController.pluginInstance.onOptionSelected(event, index);
+    // Create an array to store selected indices
+    // Initialize _selectedIndices as array if undefined
+    if (!Array.isArray(MCQController.pluginInstance._selectedIndices)) {
+        MCQController.pluginInstance._selectedIndices = [];
+    }
+
+    // Reset selected indices array
+    MCQController.pluginInstance._selectedIndices = [];
+    const options = MCQController.pluginInstance._question.data.options;
+    const correctOptionsCount = options.filter(opt => opt.isCorrect).length;
+    const isMultipleCorrect = correctOptionsCount > 1;
+    
+    if (!isMultipleCorrect) {
+        // Single select mode - remove selection from all other options
+        $('.mcq2-2-option').removeClass('opt-selected');
+        $(event.target).closest('.mcq2-2-option').addClass('opt-selected');
+        
+        // Update selected indices for single select
+        MCQController.pluginInstance._selectedIndices = [index];
+    }
+    else{
+        // Iterate over all options to find selected ones
+        $('.mcq2-2-option').each(function (i, element) {
+            if ($(element).hasClass('opt-selected')) {
+                if (!MCQController.pluginInstance._selectedIndices.includes(i)) {
+                    MCQController.pluginInstance._selectedIndices.push(i);
+                }
+            }
+        });
+    }
     if (MCQController.pluginInstance._question.data.options[index].audio)
         MCQController.pluginInstance.playAudio({
             src: MCQController.pluginInstance._question.data.options[index].audio

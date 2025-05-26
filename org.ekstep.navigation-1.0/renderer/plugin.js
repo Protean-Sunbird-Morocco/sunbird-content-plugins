@@ -38,12 +38,19 @@
     });
 
     //If register call plugin next method
-    EkstepRendererAPI.addEventListener("renderer:navigation:next",function(event){
+    EkstepRendererAPI.addEventListener("renderer:navigation:next", function (event) {
+      var _selectedIndices = MCQController.pluginInstance._selectedIndices || [];
+      var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || {};
       var registered = _.isEmpty(instance._customNavigationPlugins);
       if(!registered){
         // Get the first plugin instance and pass control to it.
         var pluginInstance = instance._customNavigationPlugins[0];
-        pluginInstance.handleNext();
+        if (!_.isEmpty(_selectedIndices)) {
+          pluginInstance.handleNext();
+        }
+        else{
+          EkstepRendererAPI.dispatchEvent("renderer:toast:show",undefined,{type:"warning",message: labels?.selectAnswersToContinue || "Select one or more answers to continue."})
+        }
 
         if(pluginInstance._itemIndex > 0){
             EventBus.dispatch("renderer:previous:enable");

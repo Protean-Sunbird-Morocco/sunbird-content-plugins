@@ -58,9 +58,6 @@ org.ekstep.mcq.questionComponent = {
                         <div class="expand-container">\
                             <%= question.data.question.text %>\
                         </div>\
-                        <div class="expand-button" tabindex="0" onclick="org.ekstep.mcq.questionComponent.toggleQuestionText({layout:\'qcontainer-big\'})">\
-                            <img \ class="exp-button" src="" id="org-ekstep-contentrenderer-questionunit-questionComponent-downArwImg"" /> \
-                        </div> \
                     </div> \
                     <% if(question.data.question.image) { %>\
                         <div  class="image-container <% if(!question.data.question.text){ %> no-text <% } %> \ "> \
@@ -93,9 +90,6 @@ org.ekstep.mcq.questionComponent = {
                 <div class="expand-container <% if(question.data.question.image || question.data.question.audio){ %> with-media <% } %>">\
                 <%= question.data.question.text %>\
                 </div>\
-            </div>\
-            <div class="expand-button" tabindex="0" onclick="org.ekstep.mcq.questionComponent.toggleQuestionText()">\
-                <img class="exp-button" src="" id="org-ekstep-contentrenderer-questionunit-questionComponent-downArwImg"/>\
             </div>\
         </div><script>org.ekstep.mcq.questionComponent.onDomReady();</script>\
         ';

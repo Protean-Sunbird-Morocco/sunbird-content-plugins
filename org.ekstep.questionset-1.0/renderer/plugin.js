@@ -295,8 +295,17 @@ org.ekstep.questionsetRenderer = IteratorPlugin.extend({ // eslint-disable-line 
     this.renderPrevQuestion();
   },
   renderPrevQuestion: function() {
-    // Get the previous question to be rendered
     var instance = this;
+    var renderIndex = this.getRenderedIndex();
+    if (renderIndex - 1 < 0) {
+      return undefined;
+    }
+    var currentQuestion = this._renderedQuestions[renderIndex];
+    EkstepRendererAPI.dispatchEvent(instance._currentQuestion.pluginId + ":evaluate", function(result) {
+      instance.saveQuestionState(currentQuestion.id, result.state);
+    })
+    // Get the previous question to be rendered
+
     var prevQ = this.getPrevQuestion();
     if (prevQ) {
       this.renderQuestion(prevQ);

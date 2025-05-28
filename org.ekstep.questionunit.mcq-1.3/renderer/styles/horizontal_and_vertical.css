@@ -198,7 +198,7 @@
     display: table;
 }
 .mcq-content-container .outer-option-container.horizontal {
-    padding-top: 2.5%;
+    padding-top: 7.5%;
     margin-right: 10.40%;
     margin-left: 10.40%;
     height: 76.5%;
@@ -352,6 +352,7 @@
     display: table-cell;
     vertical-align: middle;
     padding-left: 5%;
+    overflow: scroll;
 }
 mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.imagegrid-text-mcq{
     display: block;

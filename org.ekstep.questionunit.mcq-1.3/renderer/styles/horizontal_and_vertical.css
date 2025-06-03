@@ -205,6 +205,7 @@
     position: relative;
     overflow: auto;
     padding-bottom: 2.5%;
+    font-size: 0.9rem !important;
 }
 
 .mcq-content-container .outer-option-container.horizontal::-webkit-scrollbar {
@@ -351,8 +352,8 @@
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    padding-left: 5%;
     overflow: scroll;
+    padding-inline: 5%;
 }
 mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.imagegrid-text-mcq{
     display: block;

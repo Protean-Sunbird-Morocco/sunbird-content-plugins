@@ -385,6 +385,7 @@ mcq-content-container .option-container.horizontal .option-block-container .opti
     align-items: center;
     vertical-align: middle;
     font-size: 1.2rem;
+    line-height: 1.1;
 }
 .mcq-content-container .option-container.horizontal .option-block-container .option-width-50 .option-text-container-mcq .mcq-imagegrid-text{
     width: 70vw;

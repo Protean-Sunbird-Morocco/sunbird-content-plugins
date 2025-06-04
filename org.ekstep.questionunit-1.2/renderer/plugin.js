@@ -53,6 +53,7 @@ org.ekstep.contentrenderer.questionUnitPlugin = Plugin.extend({
     this.setQuestionTemplate();
 
     var questionsetInstance = event.target;
+     
     var qData = questionsetInstance._currentQuestion.data.__cdata || questionsetInstance._currentQuestion.data;
     this.setQuestionData(JSON.parse(qData));
 
@@ -61,6 +62,14 @@ org.ekstep.contentrenderer.questionUnitPlugin = Plugin.extend({
 
     var qState = questionsetInstance._currentQuestionState;
     this.setQuestionState(qState);
+
+    if(questionsetInstance._currentQuestion?.config?.__cdata){
+      const questionMetaData = JSON.parse(questionsetInstance._currentQuestion?.config?.__cdata);
+      const container = document.getElementById("questionset");
+      if (container) {
+          container.dir = questionMetaData?.metadata?.language?.includes("Arabic") ? "rtl" : "ltr";
+      }
+    }
   },
   /**
    * Actions to be performed after the question is rendered.

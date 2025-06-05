@@ -34,7 +34,7 @@ describe('qs-feedback', function() {
         "__cdata": "{\"title\":\"test\",\"max_score\":3,\"allow_skip\":true,\"show_feedback\":false,\"shuffle_questions\":false,\"shuffle_options\":false,\"total_items\":1,\"btn_edit\":\"Edit\"}"
       },
       "pluginType": "org.ekstep.questionset",
-      "font": "NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam"
+      "font": 'Times New Roman'
     };
 
     Renderer.theme._currentStage = 123;

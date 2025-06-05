@@ -351,8 +351,9 @@
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    padding-left: 5%;
     overflow: scroll;
+    padding-inline: 5%;
+    font-size: 1.3rem;
 }
 mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.imagegrid-text-mcq{
     display: block;
@@ -384,6 +385,7 @@ mcq-content-container .option-container.horizontal .option-block-container .opti
     display: block;
     align-items: center;
     vertical-align: middle;
+    line-height: 1.1;
 }
 .mcq-content-container .option-container.horizontal .option-block-container .option-width-50 .option-text-container-mcq .mcq-imagegrid-text{
     width: 70vw;

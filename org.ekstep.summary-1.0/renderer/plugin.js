@@ -11,11 +11,31 @@ org.ekstep.summaryRenderer = Plugin.extend({ // eslint-disable-line no-undef
   _totalAttempted: 0,
   _totalNonAttempted: 0,
   _totalQuestions:0,
+  _labels:{},
   initPlugin: function(data) {
     var instance = this;
+    var globalContfig = EkstepRendererAPI.getGlobalConfig();
+    instance._labels = globalContfig.context.resourceBundles;
     instance._qsSummary = {"attempted":[],"nonAttempted":[]};
     instance.addSummary();
-    var summaryElement = summaryTemplate.showTemplate();
+    var summaryElement = _.template('<div class="popup" id="assess-summary"style="z-index: 9999999;top:0%;background-color: #fff4f4;">\
+    <div class="assessment-overlay">\
+    <div class="assessment-content assessment-result-content">\
+      <div class="assessment-content-title"> <%= (summaryTemplate._labels && summaryTemplate._labels.submitToContinue) || "Submit to continue." %> </div>\
+      <div class="assessment-content-description">\
+        <div class="assessment-scorelist text-center">\
+          <div class="assessment-scoreitem"> <%= (summaryTemplate._labels && summaryTemplate._labels.totalQuestions) || "Total questions:" %> <span class="score"><%= summaryTemplate._QSSummary.attempted.length +  summaryTemplate._QSSummary.nonAttempted.length%></span></div>\
+          <div class="assessment-scoreitem"> <%= (summaryTemplate._labels && summaryTemplate._labels.questionsAnswered) || "Questions answered:" %> <span class="score"><%= summaryTemplate._QSSummary.attempted.length %></span></div>\
+          <div class="assessment-scoreitem"> <%= (summaryTemplate._labels && summaryTemplate._labels.questionsSkipped) || "Questions skipped:" %> <span class="score"><%= summaryTemplate._QSSummary.nonAttempted.length %></span></div>\
+        </div>\
+      </div>\
+      <div class="assessment-action-buttons">\
+        <button type="button" class="sb-btn sb-btn-normal sb-btn-outline-primary sb-btn-responsive mr-24" onclick=summaryTemplate.pluginInstance.goBackSummary()> <%= (summaryTemplate._labels && summaryTemplate._labels.review) || " Review" %> </button>\
+        <button type="submit" class="sb-btn sb-btn-primary sb-btn-normal sb-btn-responsive" onclick=summaryTemplate.pluginInstance.submitSummary()> <%= (summaryTemplate._labels && summaryTemplate._labels.submit) || "Submit" %> </button>\
+      </div>\
+    </div>\
+  </div>\
+</div>');
     summaryTemplate.pluginInstance = instance;
     $("#gameArea").append(summaryElement);
     $("#gameArea").css({
@@ -38,6 +58,7 @@ org.ekstep.summaryRenderer = Plugin.extend({ // eslint-disable-line no-undef
       }
     });
     summaryTemplate._QSSummary = instance._qsSummary;
+    summaryTemplate._labels = instance._labels;
   },
   setAttemptedQuestion: function(questionId){
     var instance = this;

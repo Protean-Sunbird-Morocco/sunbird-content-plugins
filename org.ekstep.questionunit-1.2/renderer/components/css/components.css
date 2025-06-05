@@ -162,6 +162,7 @@ body {
 
 .question-container .hiding-container .expand-container p {
     margin-top: 2.5%;
+    font-size: 1.5rem;
 }
 
 .question-container .expand-button {

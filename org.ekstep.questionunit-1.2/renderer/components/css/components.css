@@ -88,6 +88,7 @@ body {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
     position: relative;
     z-index: 3;
+    font-size: 1rem !important;
 }
 
 .question-container .image-container {
@@ -163,6 +164,7 @@ body {
 .question-container .hiding-container .expand-container p {
     margin-top: 2.5%;
 }
+
 
 .question-container .expand-button {
     position: absolute;
@@ -259,12 +261,11 @@ body {
     font-style: italic;
 }
 
-.urdu-text{
-    text-align: right;
-    font-family: NotoNastaliqUrdu;
-    font-size: 12px;
-    padding: 3px;
-    line-height: 1.95em
+.urdu-text {
+  text-align: right;
+  font-size: 12px;
+  padding: 3px;
+  line-height: 1.95em;
 }
 
 /* QUESTION COMPONENT BIG START */
@@ -409,3 +410,31 @@ body {
 .no-qimage .text-image-container .hiding-container {
     height: 89%;
 }
+
+@media (min-width: 376px) {
+    .urdu-text,
+    .question-container .hiding-container .expand-container p {
+      font-size: 0.6875rem !important; /* 11px */
+    }
+  }
+  
+  @media (min-width: 391px) {
+    .urdu-text,
+    .question-container .hiding-container .expand-container p {
+      font-size: 0.875rem !important; /* 14px */
+    }
+  }
+  
+  @media (min-width: 413px) {
+    .urdu-text,
+    .question-container .hiding-container .expand-container p {
+      font-size: 1rem !important; /* 16px */
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .urdu-text,
+    .question-container .hiding-container .expand-container p {
+      font-size: 1.375rem !important; /* 22px */
+    }
+  }

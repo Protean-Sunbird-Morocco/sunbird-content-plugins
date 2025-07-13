@@ -59,7 +59,8 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
     /**
      * 
      */
-    $scope.headerMessage = 'Edit Details'
+    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
+    $scope.headerMessage = $scope.labels.creation?.frmelmnts?.lbl?.editDetails || 'Edit Details'
 
     /**
      * 
@@ -325,7 +326,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 } else {
                     console.error("Fails to save the data", err);
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to update the content, Please try again!',
+                        message: $scope.labels.creation?.frmelmnts?.lbl?.unableToUpdateContentPleaseTryAgainLater || 'Unable to update the content, Please try again!',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -610,7 +611,34 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 $scope.contentMeta['creators'] = null;
             }
             var layoutConfigurations = $scope.getLayoutConfigurations();
+            var labels = ecEditor.getConfig('resourceBundles') || {};
+            var labelMap = {
+                name: { label: 'name', placeholder: 'labelNamePlaceHolder' },
+                description: { label: 'description', placeholder: 'labelDescriptionPlaceHolder' },
+                organisation: { label: 'organisation', placeholder: 'labelOrganizationPlaceHolder' },
+                language: { label: 'language', placeholder: 'labelLanguagePlaceHolder' },
+                category: { label: 'category', placeholder: 'labelCategoryPlaceHolder' },
+                qlevel: { label: 'level', placeholder: 'labelLevelPlaceHolder' },
+                max_score: { label: 'max_score', placeholder: 'labelMaxScorePlaceHolder' }
+                // Add more mappings as needed
+            };
+            _.forEach(layoutConfigurations.fixedLayout, function(field) {
+                var map = labelMap[field.code];
+                if (map) {
+                    // Use the translation if it exists, otherwise keep the original
+                    field.label = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.placeholder] || field.placeholder;
+                }
+            });
             $scope.fixedLayoutConfigurations = _.uniqBy(layoutConfigurations.fixedLayout, 'code');
+            _.forEach(layoutConfigurations.dynamicLayout, function(field) {
+                var map = labelMap[field.code];
+                if (map) {
+                    // Use the translation if it exists, otherwise keep the original
+                    field.label = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.placeholder] || field.placeholder;
+                }
+            });
             $scope.dynamicLayoutConfigurations = _.sortBy(_.uniqBy(layoutConfigurations.dynamicLayout, 'code'), 'index');
             $scope.mapMasterCategoryList($scope.fields);
         }

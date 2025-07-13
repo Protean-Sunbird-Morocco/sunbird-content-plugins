@@ -90,6 +90,7 @@ angular.module('createquestionapp', [])
     $scope.checkedQuestions = new Map();
     $scope.totalQuestionsCount;
     $scope.showMoreVisibility = true;
+    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
 
     ecEditor.addEventListener('editor:form:change', function (event, data) {
       if (data.templateId == "filterMetaDataTemplate") {
@@ -690,7 +691,7 @@ angular.module('createquestionapp', [])
             ecEditor.dispatchEvent($scope.pluginIdObj.question_create_id + ":showpopup", qMetadata);
           } else {
             ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-              title: 'Failed to copy question...',
+              title: $scope.labels?.creation?.frmelmnts?.lbl?.failedToCopyQuestion || 'Failed to copy question...',
               position: 'topCenter',
             });
           }
@@ -721,7 +722,7 @@ angular.module('createquestionapp', [])
         })
       } else {
         ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-          title: 'Failed to delete question...',
+          title: $scope.labels?.creation?.frmelmnts?.lbl?.failedToDeleteQuestion || 'Failed to delete question...',
           position: 'topCenter',
         });
       }
@@ -732,6 +733,7 @@ angular.module('createquestionapp', [])
       var config = {
         template: ecEditor.resolvePluginResource(pluginInstance.manifest.id, pluginInstance.manifest.ver, "editor/deletepopup.html"),
         controller: ['$scope', 'mainCtrlScope', function ($scope, mainCtrlScope) {
+          $scope.labels = ecEditor.getConfig('resourceBundles') || {};
           $scope.delete = function () {
             mainCtrlScope.deleteQuestion(questionObj);
             $scope.closeThisDialog();
@@ -773,7 +775,7 @@ angular.module('createquestionapp', [])
           $scope.selQuestionObj.max_score = 1;
         });
         ecEditor.dispatchEvent("org.ekstep.toaster:info", {
-          title: 'Each question will carry equal weightage of 1 mark when using Shuffle. To provide different weightage to individual questions please turn off Shuffle.',
+          title: $scope.labels?.creation?.frmelmnts?.lbl?.provideDifferentWeightage || 'Each question will carry equal weightage of 1 mark when using Shuffle. To provide different weightage to individual questions please turn off Shuffle.',
           position: 'topCenter',
         });
       } else {

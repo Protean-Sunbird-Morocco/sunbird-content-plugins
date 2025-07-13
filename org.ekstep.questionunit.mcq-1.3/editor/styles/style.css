@@ -217,12 +217,12 @@ i.large.icon.delete-icon{
   border-bottom: 1px solid #d8d8d8;
 }
 /*Its adding placeholder in text box option*/
-.option-placeholder::before{
- content: 'Enter answer';
- color: #aaa;
- display: block;
- position: absolute;
- left: 45%;
+.option-placeholder::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  display: block;
+  position: absolute;
+  left: 45%;
 }
 .qc-media-section{
   padding-top: 0rem;

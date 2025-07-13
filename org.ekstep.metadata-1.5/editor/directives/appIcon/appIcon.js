@@ -10,6 +10,7 @@ formApp.directive('appIcon', function() {
     var appIconController = ['$scope', '$controller', function($scope, $controller) {
         $scope.contentMeta.appIcon = $scope.contentMeta.appIcon || undefined;
         $scope.appIconConfig = {}
+        $scope.labels = ecEditor.getConfig('resourceBundles') || {};
         $scope.invokeAssetBrowser = function() {
             ecEditor.dispatchEvent(ASSETBROWSER_SHOW_EVENT, {
                 type: 'image',

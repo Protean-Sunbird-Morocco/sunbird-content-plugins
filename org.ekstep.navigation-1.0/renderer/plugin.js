@@ -40,7 +40,7 @@
     //If register call plugin next method
     EkstepRendererAPI.addEventListener("renderer:navigation:next", function (event) {
       var _selectedIndices = MCQController.pluginInstance._selectedIndices || [];
-
+      var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || window.parent.ecEditor.getConfig('resourceBundles')?.consumption?.frmelmnts?.lbl || {};
       var registered = _.isEmpty(instance._customNavigationPlugins);
       if(!registered){
         // Get the first plugin instance and pass control to it.
@@ -49,7 +49,7 @@
           pluginInstance.handleNext();
         }
         else{
-          EkstepRendererAPI.dispatchEvent("renderer:toast:show",undefined,{type:"warning",message:"Select one or more answers to continue."})
+          EkstepRendererAPI.dispatchEvent("renderer:toast:show",undefined,{type:"warning",message: labels?.selectAnswersToContinue || "Select one or more answers to continue."})
         }
 
         if(pluginInstance._itemIndex > 0){

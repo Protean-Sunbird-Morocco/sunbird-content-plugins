@@ -76,15 +76,17 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
     $scope.listLimit = 5;
     $scope.disableTocActionBtn = false;
     $scope.loader = false;
+    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
     $scope.CONSTANTS = {
-        tocDownloadFailed: 'Unable to download the content, please try again later',
-        tocDownloadSuccess: 'Table of Content downloaded!',
-        tocUpdateHeader: 'Update Table of Contents Metadata attributes via CSV',
-        tocUpdateDescription: 'Please note that no sections can be added or removed through this update, only the values of the attributes can be changed.',
-        tocUpdateBtnUpload: 'Upload',
-        tocUpdateBtnClose: 'Close',
-        tocUpdateSampleCsvFile: 'Sample update csv file',
-        tocUpdateSampleCsvFileLink: ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/updatesamplecsvfile.csv')
+        tocDownloadFailed: $scope.labels?.creation?.frmelmnts?.lbl?.unableToDownloadContentTryAgain || 'Unable to download the content, please try again later',
+        tocDownloadSuccess: $scope.labels?.creation?.frmelmnts?.lbl?.tableOfContentDownloaded || 'Table of Content downloaded!',
+        tocUpdateHeader: $scope.labels?.creation?.frmelmnts?.lbl?.updateMetadataAttributesViaCSV || 'Update Table of Contents Metadata attributes via CSV',
+        tocUpdateDescription: $scope.labels?.creation?.frmelmnts?.lbl?.tocUpdateDescription || 'Please note that no sections can be added or removed through this update, only the values of the attributes can be changed.',
+        tocUpdateBtnUpload: $scope.labels?.creation?.frmelmnts?.lbl?.upload || 'Upload',
+        tocUpdateBtnClose: $scope.labels?.creation?.frmelmnts?.lbl?.close || 'Close',
+        tocUpdateSampleCsvFile: $scope.labels?.creation?.frmelmnts?.lbl?.sampleUpdateCSVfile || 'Sample update csv file',
+        tocUpdateSampleCsvFileLink: ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/updatesamplecsvfile.csv'),
+        contentDownloadStarted: $scope.labels?.creation?.frmelmnts?.lbl?.contentDownloadStarted || 'Content download started!',
     }
     $scope.contentLock = ecEditor.getConfig('lock');
     $scope.dataChanged = false;
@@ -387,7 +389,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
         })
         if (dialCodeMisssing) {
             ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                message: "Errors found in linked QR Codes. Please check and correct.",
+                message: $scope.labels?.creation?.frmelmnts?.lbl?.errorFoundInLinkedQRcode || "Errors found in linked QR Codes. Please check and correct.",
                 position: 'topCenter',
                 icon: 'fa fa-warning'
             })
@@ -640,7 +642,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
             ecEditor.getService('content').downloadContent(ecEditor.getContext('contentId'), fileName.toLowerCase(), function (err, resp) {
                 if (!err && resp.data.responseCode == "OK") {
                     ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                        title: 'Content download started!',
+                        title: $scope.CONSTANTS.contentDownloadStarted,
                         position: 'topCenter',
                         icon: 'fa fa-download'
                     });
@@ -653,7 +655,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
                     document.body.removeChild(link);
                 } else {
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to download the content, please try again later',
+                        message: $scope.labels?.creation?.frmelmnts?.lbl?.unableToDownloadContentTryAgain || 'Unable to download the content, please try again later',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -795,7 +797,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
                 if (!_.isEmpty(errResponse) && errResponse.hasOwnProperty('count')) {
                         if (errResponse.count >= $scope.qrCodeCount.request) {
                         toasterPrompt = {
-                            message: 'No new QR Codes have been generated!',
+                            message: $scope.labels?.creation?.frmelmnts?.lbl?.noNewQRcodesGenerated || 'No new QR Codes have been generated!',
                             type: "org.ekstep.toaster:warning",
                             icon: 'fa fa-warning'
                         }
@@ -810,7 +812,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
                 $scope.isGeneratingQRCodes = false;
             } else if (res) {
                 toasterPrompt = {
-                    message: 'QR code generated.',
+                    message: $scope.labels?.creation?.frmelmnts?.lbl?.QRcodeGenerated || 'QR code generated.',
                     type: "org.ekstep.toaster:success",
                     icon: 'fa fa-check-circle'
                 }
@@ -858,7 +860,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
                     if (response && response.hasOwnProperty('status')) {
                         if (res.data.result.status === 'in-process') {
                             toasterPrompt = {
-                                message: 'QR code image generation is in progress. Please try downloading after sometime',
+                                message: $scope.labels?.creation?.frmelmnts?.lbl?.QRcodeGenerationInProgress || 'QR code image generation is in progress. Please try downloading after sometime',
                                 type: "org.ekstep.toaster:info",
                                 icon: 'fa fa-info-circle'
                             }
@@ -896,7 +898,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
                                 a.click();
                                 document.body.removeChild(a);
                                 toasterPrompt = {
-                                    message: 'QR codes downloaded',
+                                    message: $scope.labels?.creation?.frmelmnts?.lbl?.QRcodesDownloaded || 'QR codes downloaded',
                                     type: "org.ekstep.toaster:success",
                                     icon: 'fa fa-check-circle'
                                 }
@@ -1049,6 +1051,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
 
     $scope.showStatusPopup = function (type, message) {
         var meta = ecEditor.getService(ServiceConstants.CONTENT_SERVICE).getContentMeta(ecEditor.getContext('contentId'));
+        var labels = ecEditor.getConfig('resourceBundles') || {};
         // reset status flags
         $scope.isIdle = false;
         $scope.isResume = false;
@@ -1057,24 +1060,24 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
         if (meta) {
             switch (type) {
                 case 'LOCK_REFRESH_ERROR':
-                    $scope.contentLockstatusMessage = 'Error Occured. Try again after sometime.';
+                    $scope.contentLockstatusMessage = labels?.creation?.frmelmnts?.lbl?.tryAfterSometime ||  'Error Occured. Try again after sometime.';
                     $scope.isClose = true;
                     $scope.isRefresh = true;
                     break;
                 case 'IDLE_TIMEOUT':
-                    $scope.contentLockstatusMessage = 'You have been inactive.';
+                    $scope.contentLockstatusMessage = labels?.creation?.frmelmnts?.lbl?.youHaveBeenInactive || 'You have been inactive.';
                     $scope.isIdle = true;
                     break;
                 case 'LOCK_NOT_AVAILABLE':
-                    $scope.contentLockstatusMessage = 'Someone is currently working on ' + meta.name + '. Try again later.';
+                    $scope.contentLockstatusMessage = (labels?.creation?.frmelmnts?.lbl?.someoneWorking || 'Someone is currently working on ') + meta.name + (labels?.creation?.frmelmnts?.lbl?.tryAgainLater || '. Try again later.');
                     $scope.isClose = true;
                     break;
                 case 'INVALID_LOCK_ID':
-                    $scope.contentLockstatusMessage = 'Close and Re-open content to resume editing';
+                    $scope.contentLockstatusMessage = labels?.creation?.frmelmnts?.lbl?.closeAndReopenContent || 'Close and Re-open content to resume editing';
                     $scope.isClose = true;
                     break;
                 case 'SESSION_TIMEOUT':
-                    $scope.contentLockstatusMessage = meta.name + ' locked due to inactivity, click Resume to continue editing. Closing will result in loss of unsaved changes.';
+                    $scope.contentLockstatusMessage = meta.name + (labels?.creation?.frmelmnts?.lbl?.inactivityMessage || ' locked due to inactivity, click Resume to continue editing. Closing will result in loss of unsaved changes.');
                     $scope.isClose = true;
                     $scope.isResume = true;
                     break;
@@ -1188,7 +1191,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
             if (error) {
                 console.error("Something went wrong ", error)
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: "Something is not right, try after some time",
+                    message: $scope.labels?.creation?.frmelmnts?.lbl?.somethingNotRight || "Something is not right, try after some time",
                     position: "topCenter",
                     icon: "fa fa-error"
                 });

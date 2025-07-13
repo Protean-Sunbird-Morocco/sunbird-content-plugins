@@ -4,9 +4,9 @@
          <div id="errorLockContentModal" class="ui modal">
             <div class="ui icon header" ng-bind="contentLockstatusMessage"></div>
             <div class="actions" ng-if="isResume || isClose || isRefresh">
-                <div class="ui ok blue button" ng-if="isResume" ng-click="generateTelemetry({ id:'button',subtype: 'resumeLock', target: 'resumeLockButton'});" ><i class="checkmark icon"></i>Resume</div>
-                <div class="ui ok blue button" ng-if="isRefresh" ng-click="refreshLock();generateTelemetry({ id:'button',subtype: 'refreshLock', target: 'refreshLockButton'});"><i class="refresh icon"></i>Refresh</div>
-                <div class="ui basic cancel button" ng-if="isClose" ng-click="generateTelemetry({ id:'button',subtype: 'closeLock', target: 'closeLockButton'});"><i class="close icon"></i>Close Editor</div>
+                <div class="ui ok blue button" ng-if="isResume" ng-click="generateTelemetry({ id:'button',subtype: 'resumeLock', target: 'resumeLockButton'});" ><i class="checkmark icon"></i>{{labels.creation.frmelmnts.lbl.resume || "Resume"}}</div>
+                <div class="ui ok blue button" ng-if="isRefresh" ng-click="refreshLock();generateTelemetry({ id:'button',subtype: 'refreshLock', target: 'refreshLockButton'});"><i class="refresh icon"></i>{{labels.creation.frmelmnts.lbl.refresh || "Refresh"}}</div>
+                <div class="ui basic cancel button" ng-if="isClose" ng-click="generateTelemetry({ id:'button',subtype: 'closeLock', target: 'closeLockButton'});"><i class="close icon"></i>{{labels.creation.frmelmnts.lbl.closeEditor || "Close Editor"}}</div>
             </div>
         </div>
         <div class="one wide centered column custom-1-wide">
@@ -20,22 +20,22 @@
             </div>
             <div class="row custom-row-2" ng-show="showEditDetailsOption">
                 <a class="btn at-btn at-btn-ok" ng-click="editContentMeta();generateTelemetry({id:'button',subtype:'',target:'editmeta'})">
-                    <span ng-if="showEditMeta"><i class="edit icon link"></i>&nbsp;Edit Details</span>
-                    <span ng-if="!showEditMeta"><i class="eye icon link"></i>&nbsp;View Details </span>
+                    <span ng-if="showEditMeta"><i class="edit icon link"></i>&nbsp;{{labels.creation.frmelmnts.lbl.editDetails || "Edit Details"}}</span>
+                    <span ng-if="!showEditMeta"><i class="eye icon link"></i>&nbsp;{{labels.creation.frmelmnts.lbl.viewDetails || "View Details"}} </span>
                 </a>
             </div>
 
         </div>
         <div class="two wide column">
             <div ng-if="lastSaved && internetStatusObj.status" class="last-saved-label">
-                <label class="">Last saved {{lastSaved | timeAgo }}</label>
+                <label class="">{{labels.creation.frmelmnts.lbl.lastSaved || "Last saved"}} {{lastSaved | timeAgo }}</label>
             </div>
             <label class="internet-status" ng-class="{'internet-status-label':internetStatusObj.status}">
                 <span class="spinner"></span>{{internetStatusObj.text}}
             </label>
         </div>
         <div class="ui active inverted dimmer" id="downloadtoc-loader" ng-if="loader" style="top:30px !important">
-            <div class="ui large text loader">Downloading</div>
+            <div class="ui large text loader">{{labels.creation.frmelmnts.lbl.downloading || "Downloading"}}</div>
         </div>
         <div class="five wide column custom-5-wide" style="padding-top:1rem!important;">
             <div class="row header-icon-container">
@@ -44,17 +44,17 @@
                         class="custom-row-2" style="float: left; margin: 2px">
                         <div class="ui dropdown" style=" vertical-align: -webkit-baseline-middle; ">
                             <div class="ui dropdown">
-                                <span class="ui tiny header">TOC</span>
+                                <span class="ui tiny header">{{labels.creation.frmelmnts.lbl.toc || "TOC"}}</span>
                                 <i class="dropdown icon"></i>
                             </div>
                             <div class="menu" style="left: auto; right: 0; top: 25px;">
                                 <div class="item" ng-click="downloadToc(); generateTelemetry({ id:'button',subtype: 'downloadToc', target: 'downloadTocButton'},{context:{cdata:[{id:'toc:csvDownload', type:'Feature'},{id:'SB-7976', type:'Task'}]}});"
                                     ng-class="disableTocActionBtn ? 'disabled' : 'enabled'">
-                                    <i class="download icon"></i> Download ToC Metadata
+                                    <i class="download icon"></i> {{labels.creation.frmelmnts.lbl.downloadToc || "Download ToC Metadata"}}
                                 </div>
                                 <div class="item" ng-click="updateToc(); generateTelemetry({ id:'button',subtype: 'uploadToc', target: 'uploadTocButton'},{context:{cdata:[{id:'toc:csvUpdate', type:'Feature'},{'id':'SB-7975', 'type':'Task'}]}});"
                                     ng-class="disableTocActionBtn ? 'disabled' : 'enabled'">
-                                    <i class="upload icon"></i> Update ToC Metadata</div>
+                                    <i class="upload icon"></i> {{labels.creation.frmelmnts.lbl.updateToc || "Update ToC Metadata"}}</div>
                             </div>
                         </div>
                     </div>
@@ -63,19 +63,19 @@
                         <div class="ui dropdown qrCodeStyler">
                             <div class="ui dropdown">
                                 <span class="ui tiny header">
-                                    QR Codes
+                                    {{labels.creation.frmelmnts.lbl.qrCodes || "QR Codes"}}
                                 </span>
                                 <i class="dropdown icon"></i>
                             </div>
                             <div class="menu" style="left: auto; right: 0; top: 25px;">
                                 <div class="item" ng-class="(!disableQRGenerateBtn || (qrCodeCount.request > 0 && qrCodeCount.request + 1 <= qrCodeCount.reserve) || isGeneratingQRCodes ) ? 'disabled' : ' '"><i class="qrcode icon"></i>
                                     <span ng-if="!isGeneratingQRCodes" class="text" ng-click="openRequestPopup(); generateTelemetry({ id:'button',subtype: 'reserveDialCode', target: 'reserveDialCodeButton'},{context:{cdata:[{id:'toc:qrcode:generate', type:'Feature'},{id:'SB-7959', type:'Task'}]}});">Generate
-                                            {{(qrCodeCount.request > 0 && qrCodeCount.request+1 > qrCodeCount.reserve)? qrCodeCount.request + ' + 1' : (qrCodeCount.reserve > 0) ? qrCodeCount.reserve-1 +' + 1' : '' }} QR Codes
+                                            {{(qrCodeCount.request > 0 && qrCodeCount.request+1 > qrCodeCount.reserve)? qrCodeCount.request + ' + 1' : (qrCodeCount.reserve > 0) ? qrCodeCount.reserve-1 +' + 1' : '' }} {{labels.creation.frmelmnts.lbl.qrCodes || "QR Codes"}}
                                     </span>
-                                    <span ng-if="isGeneratingQRCodes" class="text">Generating {{(qrCodeCount.request > 0 )? qrCodeCount.request-1 + ' + 1' :'' }} QR codes</span>
+                                    <span ng-if="isGeneratingQRCodes" class="text">{{labels.creation.frmelmnts.lbl.generating || "Generating"}} {{(qrCodeCount.request > 0 )? qrCodeCount.request-1 + ' + 1' :'' }} {{labels.creation.frmelmnts.lbl.qrCodes || "QR codes"}}</span>
                                 </div>
                                 <div class="item" ng-class="(!disableQRDownloadBtn) ? 'disabled' : ' ' " ng-click="downloadQRCodes(); generateTelemetry({ id:'button',subtype: 'downloadQRCodes', target: 'downloadQRCodesButton'});"><i
-                                        class="download icon"></i> <span class="text">Download {{(qrCodeCount.reserve > 1) ? qrCodeCount.reserve-1 + ' +1' : ''}} QR codes</span></div>
+                                        class="download icon"></i> <span class="text">{{labels.creation.frmelmnts.lbl.download || "Download"}} {{(qrCodeCount.reserve > 1) ? qrCodeCount.reserve-1 + ' +1' : ''}} {{labels.creation.frmelmnts.lbl.qrCodes || "QR codes"}}</span></div>
                             </div>
                         </div>
                     </div>
@@ -85,8 +85,7 @@
                                 data-variation="small" ng-mouseover="resetList()"></i></span>
                         <div class="dropdown-content">
                             <div class="item" ng-repeat="contentCredit in contentCredits | limitTo:listLimit">{{contentCredit.name}}</div>
-                            <button class="fluid ui button" ng-click="addListSize(); $event.stopPropagation()" ng-if="listLimit < contentCredits.length">See
-                                More</button>
+                            <button class="fluid ui button" ng-click="addListSize(); $event.stopPropagation()" ng-if="listLimit < contentCredits.length">{{labels.creation.frmelmnts.lbl.seeMore || "See More"}}</button>
                         </div>
                     </div>
                     <div class="icon-group-2">
@@ -94,15 +93,15 @@
                             data-position="bottom center" ng-click="displayWhatsNew()">
                             <i class="gift icon custom-icon" ng-class="{red: whatsNewBadge}"></i>
                         </div>
-                        <div ng-show="editorEnv == 'NON-ECML'" class="icon-box popup-item" data-content="Upload Content"
+                        <div ng-show="editorEnv == 'NON-ECML'" class="icon-box popup-item" data-content="{{labels.creation.frmelmnts.lbl.uploadContent || 'Upload Content'}}"
                             data-variation="tiny inverted" data-position="bottom center" ng-click="upload(); generateTelemetry({id:'button',subtype:'upload',target:'uploadButton'})">
                             <i class="upload icon custom-icon"></i>
                         </div>
-                        <div ng-show="editorEnv == 'NON-ECML'" class="icon-box popup-item" data-content="Download to try it out on a mobile device"
+                        <div ng-show="editorEnv == 'NON-ECML'" class="icon-box popup-item" data-content="{{labels.creation.frmelmnts.lbl.downloadToTryOnDevice || 'Download to try it out on a mobile device'}}"
                             data-variation="tiny inverted" data-position="bottom center" ng-click="download(); generateTelemetry({ id:'button',subtype: 'download', target: 'downloadButton'})">
                             <i class="download icon custom-icon"></i>
                         </div>
-                        <div id="closeButton" class="close icon-box popup-item" data-content="Close" data-variation="tiny inverted"
+                        <div id="closeButton" class="close icon-box popup-item" data-content="{{labels.creation.frmelmnts.lbl.close || 'Close'}}" data-variation="tiny inverted"
                             data-position="bottom center">
                             <a ng-click="closeEditor(); generateTelemetry({ id:'button',subtype: 'close', target: 'closeButton'})">
                                 <i class="remove icon custom-cursor"></i>
@@ -112,62 +111,62 @@
                             <i class="add user icon custom-icon"></i>
                         </div>
                         <div ng-show="showEditMeta && !publishMode && !isFlagReviewer" id="saveButton" ng-class="disableSaveBtn ? 'icon-box popup-item label-icon-box disabled' : 'icon-box popup-item label-icon-box'"
-                            data-content="Save content" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.saveContent || 'Save content'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="saveContent(); generateTelemetry({ id:'saveButton',subtype: 'save', target: 'savebutton'});">
                             <i class="icon-save"></i>
-                            <span class="label-icon-box-text save-button-text">Save</span>
+                            <span class="label-icon-box-text save-button-text">{{labels.creation.frmelmnts.lbl.save || "Save"}}</span>
                         </div>
                         <div ng-show="showEditMeta && !publishMode && !isFlagReviewer && !hideReviewBtn" id="reviewButton"
                             class="ui buttons preview-dropdown" ng-class="{ 'preview-dropdown-nonecml': editorEnv != 'ECML','popup-item disabled': disableReviewBtn }">
-                            <div class="ui button text-part popup-item" data-content="Send for review" data-variation="tiny inverted"
+                            <div class="ui button text-part popup-item" data-content="{{labels.creation.frmelmnts.lbl.sendForReview || 'Send for review'}}" data-variation="tiny inverted"
                                 data-position="bottom center" ng-click="sendForReview(); generateTelemetry({ id:'reviewButton',subtype: 'review', target: 'reviewbutton'});">
                                 <i class="send icon"></i>
                             </div>
                             <div ng-show="hideLimitedSharingBtn" class="ui pointing dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item" ng-click="limitedSharing(); generateTelemetry({ id:'button',subtype: 'limit-sharing', target:'limitedSharing'});"> Limited sharing</div>
+                                    <div class="item" ng-click="limitedSharing(); generateTelemetry({ id:'button',subtype: 'limit-sharing', target:'limitedSharing'});"> {{labels.creation.frmelmnts.lbl.limitedSharing || "Limited sharing"}}</div>
                                 </div>
                             </div>
                         </div>
                         <div ng-show="!publishMode && !isFlagReviewer && isReviewCommentsPresent" class="icon-box popup-item label-icon-box"
-                            data-content="Review comments" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.reviewComments || 'Review comments'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="openCheckList('read')">
                             <i class="fa fa-comment"></i>
                         </div>
                         <div ng-show="publishMode && !isFlagReviewer" class="icon-box popup-item label-icon-box"
-                            data-content="Reject content" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.rejectContent || 'Reject content'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="openCheckList('reject'); generateTelemetry({ id:'button',subtype: 'request-changes', target: 'changesRequestedButton'});">
                             <i class="fa fa-trash"></i>
-                            <span class="label-icon-box-text">Request Changes</span>
+                            <span class="label-icon-box-text">{{labels.creation.frmelmnts.lbl.requestChanges || "Request Changes"}}</span>
                         </div>
                         <div ng-show="publishMode && !isFlagReviewer" class="icon-box popup-item label-icon-box"
-                            data-content="Publish content" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.publishContent || 'Publish content'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="openCheckList('publish'); generateTelemetry({ id:'button',subtype: 'publish', target: 'contentPublishButton'});">
                             <i class="fa fa-cloud-upload"></i>
-                            <span class="label-icon-box-text">Publish</span>
+                            <span class="label-icon-box-text">{{labels.creation.frmelmnts.lbl.publish || "Publish"}}</span>
                         </div>
                         <div ng-show="isFlagReviewer" id="discardButton" class="icon-box popup-item label-icon-box"
-                            data-content="Discard content" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.discardContent || 'Discard content'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="discardContentFlag(); generateTelemetry({id:'button', subtype: 'retire', target: 'discardButton'});">
                             <i class="fa fa-trash"></i>
-                            <span class="label-icon-box-text">Discard</span>
+                            <span class="label-icon-box-text">{{labels.creation.frmelmnts.lbl.discard || "Discard"}}</span>
                         </div>
                         <div ng-show="isFlagReviewer" id="acceptButton" class="icon-box popup-item label-icon-box"
-                            data-content="Retire content" data-variation="tiny inverted" data-position="bottom center"
+                            data-content="{{labels.creation.frmelmnts.lbl.retireContent || 'Retire content'}}" data-variation="tiny inverted" data-position="bottom center"
                             ng-click="acceptContentFlag(); generateTelemetry({ id:'acceptButton',subtype: 'accept', target: 'acceptContentFlag'});">
                             <i class="fa fa-check"></i>
-                            <span class="label-icon-box-text">Accept</span>
+                            <span class="label-icon-box-text">{{labels.creation.frmelmnts.lbl.accept || "Accept"}}</span>
                         </div>
                         <div ng-if="editorEnv == 'ECML' && hidePreviewBtn " class="ui buttons preview-dropdown">
-                            <div class="ui button text-part popup-item" data-content="Preview" data-variation="tiny inverted"
+                            <div class="ui button text-part popup-item" data-content="{{labels.creation.frmelmnts.lbl.preview || 'Preview'}}" data-variation="tiny inverted"
                                 data-position="bottom center" ng-click="previewContent();">
                                 <i class="fa fa-eye"></i>
                             </div>
                             <div class="ui pointing dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item" ng-click="previewContent('start');"> Preview from start</div>
+                                    <div class="item" ng-click="previewContent('start');"> {{labels.creation.frmelmnts.lbl.previewFromStart || "Preview from start"}}</div>
                                 </div>
                             </div>
                         </div>

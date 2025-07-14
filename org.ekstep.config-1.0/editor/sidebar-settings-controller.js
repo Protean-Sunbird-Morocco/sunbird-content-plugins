@@ -22,7 +22,8 @@ angular.module('editorApp')
         $scope.settingsCategory = {};
         $scope.selectedObject = { stage: true };
         $scope.currentObject = {};
-        $scope.currentObjectActions = [];  
+        $scope.currentObjectActions = []; 
+        $scope.labels = ecEditor.getConfig('resourceBundles') || {};
 
         // on load
         $scope.settingsCategory.selected = 'customize';
@@ -90,6 +91,27 @@ angular.module('editorApp')
             unregisterWatch();
             $scope.settingsCategory.selected = 'customize';
             var pluginConfigManifest = org.ekstep.contenteditor.api._.clone(org.ekstep.contenteditor.api.getCurrentObject() ? org.ekstep.contenteditor.api.getCurrentObject().getConfigManifest() : org.ekstep.contenteditor.api.getCurrentStage().getConfigManifest());
+            var labels = ecEditor.getConfig('resourceBundles') || {};
+            var labelMap = {
+                title: { label: 'title', placeholder: 'titlePlaceholder' },
+                shuffle_questions: { label: 'shuffleQuestions', placeholder: 'shuffleQuestionsPlaceholder' },
+                show_feedback: { label: 'showFeedback', placeholder: 'showFeedbackPlaceholder' },
+                btn_edit: { label: 'editButton', placeholder: 'editButtonPlaceholder' },
+                total_items: { label: 'totalItems', placeholder: 'totalItemsPlaceholder' },
+                max_score: { label: 'maxScore', placeholder: 'maxScorePlaceholder' },
+            };
+
+
+            org.ekstep.contenteditor.api._.forEach(pluginConfigManifest, function(config) {
+                var propertyName = config.propertyName || config.PropertyName;
+                if (propertyName) {
+                    var map = labelMap[propertyName];
+                    if (map) {
+                        config.title = labels.frmelmnts.lbl.sidebarSettings[map.label] || config.title;
+                        config.placeholder = labels.frmelmnts.lbl.sidebarSettings[map.placeholder] || config.placeholder;
+                    }
+                }
+            });
             $scope.pluginConfig = pluginConfigManifest;
             $scope.configData = org.ekstep.contenteditor.api._.clone(org.ekstep.contenteditor.api.getCurrentObject() ? org.ekstep.contenteditor.api.getCurrentObject().getConfig() : org.ekstep.contenteditor.api.getCurrentStage().getConfig());
             if (org.ekstep.contenteditor.api._.isUndefined(pluginConfigManifest)) {

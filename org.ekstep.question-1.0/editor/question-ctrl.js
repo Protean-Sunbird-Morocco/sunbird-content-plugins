@@ -40,9 +40,9 @@ angular.module('org.ekstep.question', ['org.ekstep.metadataform'])
 	$scope.questionMetaData = {};
   $scope.labels = ecEditor.getConfig('resourceBundles') || {};
   $scope.messages = {
-    previewMessage:  $scope.labels?.creation?.frmelmnts?.lbl?.previewMessage || 'Please check preview before saving.',
-    formulaLimitMsg:  $scope.labels?.creation?.frmelmnts?.lbl?.formulaLimitMsg || 'Preview the question and split long formulae to ensure they are displayed correctly.',
-    layoutChangeMsg:  $scope.labels?.creation?.frmelmnts?.lbl?.layoutChangeMsg || 'Please check preview before saving. Entire question might not fit in the layout selected.'
+    previewMessage:  $scope.labels.frmelmnts.lbl.previewMessage || 'Please check preview before saving.',
+    formulaLimitMsg:  $scope.labels.frmelmnts.lbl.formulaLimitMsg || 'Preview the question and split long formulae to ensure they are displayed correctly.',
+    layoutChangeMsg:  $scope.labels.frmelmnts.lbl.layoutChangeMsg || 'Please check preview before saving. Entire question might not fit in the layout selected.'
   };
 	$scope.init = function () {
 		ecEditor.addEventListener('editor:template:loaded', function (event, object) {
@@ -92,7 +92,7 @@ angular.module('org.ekstep.question', ['org.ekstep.metadataform'])
                 var thumbnail = val.appIcon;
                 v.thumbnail1 = thumbnail;
                 var allMenus = v;
-                allMenus.title = $scope.labels.creation?.frmelmnts.lbl[allMenus.id] || allMenus.title;
+                allMenus.title = $scope.labels.frmelmnts.lbl[allMenus.id] || allMenus.title;
                 // Only push if id is "horizontalMCQ"
                 if (allMenus.id === "horizontalMCQ") {
                   $scope.questionTemplates.push(allMenus);
@@ -379,7 +379,7 @@ angular.module('org.ekstep.question', ['org.ekstep.metadataform'])
   		} else {
         $scope.savingQuestion = false;
   			ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-  				title: $scope.labels?.creation?.frmelmnts?.lbl?.failedToSaveQuestion || 'Failed to save question...',
+  				title: $scope.labels.frmelmnts.lbl.failedToSaveQuestion || 'Failed to save question...',
   				position: 'topCenter',
   			});
   		}

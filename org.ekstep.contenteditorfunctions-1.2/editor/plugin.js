@@ -41,14 +41,14 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).sendForReview({ contentId: contentId, channel: ecEditor.getContext('channel') }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentSentForReview || 'Content sent for review...',
+                    title: labels.frmelmnts.lbl.contentSentForReview || 'Content sent for review...',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
                 callback && callback(err, res);
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.sendingForReviewFailed || 'Sending for review failed, please try again later...',
+                    message: labels.frmelmnts.lbl.sendingForReviewFailed || 'Sending for review failed, please try again later...',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -234,12 +234,12 @@ org.ekstep.contenteditor.basePlugin.extend({
     changePopupValues: function(message) {
         var labels = ecEditor.getConfig('resourceBundles') || {};
         if (message === 'success') {
-            this.popUpValues.headerMsg = labels?.creation?.frmelmnts?.lbl?.contentSaved || 'Content Saved!';
+            this.popUpValues.headerMsg = labels.frmelmnts.lbl.contentSaved || 'Content Saved!';
             this.popUpValues.popUpIcon = 'circle check green';
             this.popUpValues.showCloseButton = true;
             this.popUpValues.saveNotificationCloseButton = 'saveSuccessNotificationCloseButton';
         } else if (message === 'error') {
-            this.popUpValues.headerMsg = labels?.creation?.frmelmnts?.lbl?.failedToSaveContent || 'Failed to save Content';
+            this.popUpValues.headerMsg = labels.frmelmnts.lbl.failedToSaveContent || 'Failed to save Content';
             this.popUpValues.popUpIcon = 'circle remove red';
             this.popUpValues.showCloseButton = true;
             this.popUpValues.saveNotificationCloseButton = 'saveFailNotificationCloseButton';
@@ -331,13 +331,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).publishContent({ contentId: contentId, channel: ecEditor.getContext('channel'), data:data }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentPublishedSuccessfully || 'Content published successfully!',
+                    title: labels.frmelmnts.lbl.contentPublishedSuccessfully || 'Content published successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToPublishContent || 'Unable to publish content, try again!',
+                    message: labels.frmelmnts.lbl.unableToPublishContent || 'Unable to publish content, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -349,13 +349,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).rejectContent({ contentId: ecEditor.getContext('contentId'), channel: ecEditor.getContext('channel'), data:data }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentRejectedSuccessfully || 'Content rejected successfully!',
+                    title: labels.frmelmnts.lbl.contentRejectedSuccessfully || 'Content rejected successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToRejectContent || 'Unable to reject content, try again!',
+                    message: labels.frmelmnts.lbl.unableToRejectContent || 'Unable to reject content, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -367,13 +367,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).acceptContentFlag({ contentId: ecEditor.getContext('contentId') }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentFlagAcceptedSuccessfully || 'Content flag accepted successfully!',
+                    title: labels.frmelmnts.lbl.contentFlagAcceptedSuccessfully || 'Content flag accepted successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToAcceptContentFlag || 'Unable to accept content flag, try again!',
+                    message: labels.frmelmnts.lbl.unableToAcceptContentFlag || 'Unable to accept content flag, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -385,13 +385,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).discardContentFlag({ contentId: ecEditor.getContext('contentId') }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentFlagDiscardedSuccessfully || 'Content flag discarded successfully!',
+                    title: labels.frmelmnts.lbl.contentFlagDiscardedSuccessfully || 'Content flag discarded successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToDiscardContentFlag || 'Unable to discard content flag, try again!',
+                    message: labels.frmelmnts.lbl.unableToDiscardContentFlag || 'Unable to discard content flag, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -403,13 +403,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).retireContent({ contentId: ecEditor.getContext('contentId') }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentRetiredSuccessfully || 'Content retired successfully!',
+                    title: labels.frmelmnts.lbl.contentRetiredSuccessfully || 'Content retired successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToRetireContent || 'Unable to retire content, try again!',
+                    message: labels.frmelmnts.lbl.unableToRetireContent || 'Unable to retire content, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -458,7 +458,7 @@ org.ekstep.contenteditor.basePlugin.extend({
         this.lowlightNode(nodes.validNodes);
         if (_.size(nodes.invalidNodes) > 0) {
             if (data.showNotification) ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                message: labels?.creation?.frmelmnts?.lbl?.pleaseUpdateCollectionDetailsBeforeSave || 'Please update the collection details before save',
+                message: labels.frmelmnts.lbl.pleaseUpdateCollectionDetailsBeforeSave || 'Please update the collection details before save',
                 position: 'topCenter',
                 icon: 'fa fa-warning'
             });
@@ -469,7 +469,7 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).saveCollectionHierarchy({ body: contentBody }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 if (data.showNotification) ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentSavedSuccessfully || 'Content saved successfully!',
+                    title: labels.frmelmnts.lbl.contentSavedSuccessfully || 'Content saved successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
@@ -484,13 +484,13 @@ org.ekstep.contenteditor.basePlugin.extend({
 
             } else if(err && res.status === 401 && res.statusText === "Unauthorized") {
                 if (data.showNotification) ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.sessionTimedOut || 'Your session has timed out due to inactivity. Please login to resume!',
+                    message: labels.frmelmnts.lbl.sessionTimedOut || 'Your session has timed out due to inactivity. Please login to resume!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
             } else {
                 if (data.showNotification) ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToSaveContentTryAgain || 'Unable to save the content, try again!',
+                    message: labels.frmelmnts.lbl.unableToSaveContentTryAgain || 'Unable to save the content, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -554,13 +554,13 @@ org.ekstep.contenteditor.basePlugin.extend({
                 if (!err) {
                     if( !ecEditor._.isEmpty(org.ekstep.services.stateService.state.dialCodeMap) && !ecEditor._.isEmpty(org.ekstep.services.stateService.state.invaliddialCodeMap)){
                         ecEditor.dispatchEvent("org.ekstep.toaster:warning", {
-                            title: labels?.creation?.frmelmnts?.lbl?.unableToUpdateSomeQRCodes || 'Unable to update some of the QR codes.',
+                            title: labels.frmelmnts.lbl.unableToUpdateSomeQRCodes || 'Unable to update some of the QR codes.',
                             position: 'topCenter',
                             icon: 'fa fa-warning'
                         });
                     } else {
                         ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                            title: labels?.creation?.frmelmnts?.lbl?.qrCodesUpdatedSuccessfully || 'QR code(s) updated successfully!',
+                            title: labels.frmelmnts.lbl.qrCodesUpdatedSuccessfully || 'QR code(s) updated successfully!',
                             position: 'topCenter',
                             icon: 'fa fa-check-circle'
                         });
@@ -574,7 +574,7 @@ org.ekstep.contenteditor.basePlugin.extend({
                         });
                     }else{
                         ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                            title: labels?.creation?.frmelmnts?.lbl?.qrCodesUpdatingFailed || 'QR code(s) updating failed!',
+                            title: labels.frmelmnts.lbl.qrCodesUpdatingFailed || 'QR code(s) updating failed!',
                             position: 'topCenter',
                             icon: 'fa fa-warning'
                         });
@@ -609,13 +609,13 @@ org.ekstep.contenteditor.basePlugin.extend({
         ecEditor.getService(ServiceConstants.CONTENT_SERVICE).unlistedPublishContent({ contentId: contentId }, function(err, res) {
             if (res && res.data && res.data.responseCode == "OK") {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: labels?.creation?.frmelmnts?.lbl?.contentLimitedSharedSuccessfully || 'Content limited shared successfully!',
+                    title: labels.frmelmnts.lbl.contentLimitedSharedSuccessfully || 'Content limited shared successfully!',
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: labels?.creation?.frmelmnts?.lbl?.unableToShareContent || 'Unable to share content, try again!',
+                    message: labels.frmelmnts.lbl.unableToShareContent || 'Unable to share content, try again!',
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });

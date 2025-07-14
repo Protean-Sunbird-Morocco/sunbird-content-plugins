@@ -5,7 +5,7 @@
         <div>
           <form name="mcqForm">
             <div class="one column row qHeader">
-              <span>{{labels.creation.frmelmnts.lbl.enterQuestion || "Enter the question"}}</span>
+              <span>{{labels.frmelmnts.lbl.enterQuestion || "Enter the question"}}</span>
             </div>
             <div class="outer-segment">
               <div class="ui segments inner-segment" ng-class="{cardBorder: $ctrl.focused, 'has-errorCard': submitted && mcqForm.question.$error.required}">
@@ -14,7 +14,7 @@
                     <div class="twelve wide column">
                       <div class="form-group segment textBoxDiv questionTextBox">
                         <textarea class="form-control textboxQ" ng-class="{'has-success':mcqForm.question.$valid, 'has-error': submitted && mcqForm.question.$error.required}"
-                          ng-attr-placeholder="{{labels.creation.frmelmnts.lbl.enterQuestion || "Enter the question"}}" name="ckedit" ng-model="mcqFormData.question.text" ng-init="$ctrl.focused = false"
+                          ng-attr-placeholder="{{labels.frmelmnts.lbl.enterQuestion || "Enter the question"}}" name="ckedit" ng-model="mcqFormData.question.text" ng-init="$ctrl.focused = false"
                           ng-focus="$ctrl.focused = true;" ng-blur="$ctrl.focused = false" ng-required="!(mcqFormData.question.text.length || mcqFormData.question.image.length || mcqFormData.question.audio.length)"></textarea>
                       </div>
                     </div>
@@ -27,12 +27,12 @@
                   <div class="ui grid">
                     <div class="one column row segment-column">
                       <div class="column right floated">
-                        <span class="custom-bottom-label">{{labels.creation.frmelmnts.lbl.add || "Add:"}} </span>
-                        <span class="custom-bottom-segment ui icon"  data-tooltip="{{!mcqFormData.question.image ? (labels.creation.frmelmnts.lbl.addImage || 'Add Image') : (labels.creation.frmelmnts.lbl.editImage || 'Edit Image')}}" data-inverted=""
+                        <span class="custom-bottom-label">{{labels.frmelmnts.lbl.add || "Add:"}} </span>
+                        <span class="custom-bottom-segment ui icon"  data-tooltip="{{!mcqFormData.question.image ? (labels.frmelmnts.lbl.addImage || 'Add Image') : (labels.frmelmnts.lbl.editImage || 'Edit Image')}}" data-inverted=""
                           ng-click="addMedia('q','', 'image')">
                           <i class="image large icon"></i>
                         </span>
-                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.question.audio ? (labels.creation.frmelmnts.lbl.addAudio || 'Add Audio') : (labels.creation.frmelmnts.lbl.editAudio || 'Edit Audio')}}" data-tooltip="Add audio" data-inverted=""
+                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.question.audio ? (labels.frmelmnts.lbl.addAudio || 'Add Audio') : (labels.frmelmnts.lbl.editAudio || 'Edit Audio')}}" data-tooltip="Add audio" data-inverted=""
                           ng-click="addMedia('q','', 'audio')">
                           <i class="music large icon"></i>
                         </span>
@@ -43,7 +43,7 @@
               </div>
             </div>
             <div class="one column row qHeader" ng-if="mcqFormData.options.length > 0">
-              <span>{{labels.creation.frmelmnts.lbl.setAnswer || "Set answer"}}</span>
+              <span>{{labels.frmelmnts.lbl.setAnswer || "Set answer"}}</span>
             </div>
             <div ng-repeat="(key, value) in mcqFormData.options" class="outer-segment">
               <div class="ui segments inner-segment option-box" ng-class="{cardBorder: focused, 'has-errorCard': submitted && mcqForm['mcqoptions_' + $index].$error.required}" id="option-box-{{$index}}">
@@ -51,7 +51,7 @@
                   <div class="ui grid">
                     <div class="one column row">
                       <div class="form-group one column row">
-                        <div class="form-control contenteditable mcqoption-text-ck" ng-class="{'has-success':mcqForm['mcqoptions_' + $index].$valid, 'has-error': submitted && mcqForm['mcqoptions_' + $index].$error.required,'option-placeholder':mcqFormData.options[$index].text.length==0}" ng-required="!(mcqFormData.options[key].text.length || mcqFormData.options[key].image.length || mcqFormData.options[key].audio.length)" name="mcqoptions_{{$index}}" id="mcqoptions_{{$index}}" ng-model="mcqFormData.options[key].text"  contenteditable="true" data-placeholder="{{labels.creation.frmelmnts.lbl.enterAnswer || 'Enter answer'}}"></div>
+                        <div class="form-control contenteditable mcqoption-text-ck" ng-class="{'has-success':mcqForm['mcqoptions_' + $index].$valid, 'has-error': submitted && mcqForm['mcqoptions_' + $index].$error.required,'option-placeholder':mcqFormData.options[$index].text.length==0}" ng-required="!(mcqFormData.options[key].text.length || mcqFormData.options[key].image.length || mcqFormData.options[key].audio.length)" name="mcqoptions_{{$index}}" id="mcqoptions_{{$index}}" ng-model="mcqFormData.options[key].text"  contenteditable="true" data-placeholder="{{labels.frmelmnts.lbl.enterAnswer || 'Enter answer'}}"></div>
                       </div>
                        </div>
                        <div class="qc-media-section">
@@ -65,7 +65,7 @@
                     <div class="two column row segment-column">
                       <div class="column left-segment">
                         <a href="" ng-click="deleteAnswer(key);generateTelemetry({type: 'TOUCH', id: 'button', target: {id: 'questionunit-mcq-delete-answer', ver: '', type: 'button'}});"
-                          class="deleteText" data-tooltip="{{labels.creation.frmelmnts.lbl.deleteAnswer || 'Delete answer'}}" data-inverted="">
+                          class="deleteText" data-tooltip="{{labels.frmelmnts.lbl.deleteAnswer || 'Delete answer'}}" data-inverted="">
                           <i class="trash large icon delete-icon"></i>
                         </a>
                         <div class="ui radio correct-answer">
@@ -76,16 +76,16 @@
                             ng-model="value.isCorrect"
                             ng-change="generateTelemetry({type: 'TOUCH', id: 'toggle', target: {id: 'questionunit-mcq-correct-ans', ver: '', type: 'toggle'}})"
                           />
-                          <label for="{{$index}}" ng-class="{'has-success-text':selLbl == 'error' , 'has-error-text':selLbl == 'success' }">{{labels.creation.frmelmnts.lbl.markAsRight || "Mark as right answer"}}</label>
+                          <label for="{{$index}}" ng-class="{'has-success-text':selLbl == 'error' , 'has-error-text':selLbl == 'success' }">{{labels.frmelmnts.lbl.markAsRight || "Mark as right answer"}}</label>
                         </div>
                       </div>
                       <div class="column right aligned">
-                        <span class="custom-bottom-label">{{labels.creation.frmelmnts.lbl.add || "Add:"}} </span>
-                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.options[key].image ? (labels.creation.frmelmnts.lbl.addImage || 'Add Image') : (labels.creation.frmelmnts.lbl.editImage || 'Edit Image')}}" data-inverted=""
+                        <span class="custom-bottom-label">{{labels.frmelmnts.lbl.add || "Add:"}} </span>
+                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.options[key].image ? (labels.frmelmnts.lbl.addImage || 'Add Image') : (labels.frmelmnts.lbl.editImage || 'Edit Image')}}" data-inverted=""
                           ng-click="addMedia('op', key, 'image')">
                           <i class="image large icon"></i>
                         </span>
-                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.options[key].audio ? (labels.creation.frmelmnts.lbl.addAudio || 'Add Audio') : (labels.creation.frmelmnts.lbl.editAudio || 'Edit Audio')}}" data-inverted=""
+                        <span class="custom-bottom-segment ui icon" data-tooltip="{{!mcqFormData.options[key].audio ? (labels.frmelmnts.lbl.addAudio || 'Add Audio') : (labels.frmelmnts.lbl.editAudio || 'Edit Audio')}}" data-inverted=""
                           ng-click="addMedia('op', key, 'audio')">
                           <i class="music large icon"></i>
                         </span>
@@ -98,10 +98,10 @@
           </div>
         </div>
           </form>
-          <span class="has-success-text" ng-show="mcqFormData.options.length<2">{{labels.creation.frmelmnts.lbl.minimumAnswerRequired || "Minimum two answer will be required"}}</span>
+          <span class="has-success-text" ng-show="mcqFormData.options.length<2">{{labels.frmelmnts.lbl.minimumAnswerRequired || "Minimum two answer will be required"}}</span>
           <div class="one column row">
             <div class="column addAns">
-              <button class="ui primary basic button large" id="mcq-add-ans-button" ng-click="addAnswerField();generateTelemetry({type: 'TOUCH', id: 'button', target: {id: 'questionunit-mcq-add-answer', ver: '', type: 'button'}});" ng-if="mcqFormData.options.length < 8">{{labels.creation.frmelmnts.lbl.addAnswer || "Add answer"}} </button>
+              <button class="ui primary basic button large" id="mcq-add-ans-button" ng-click="addAnswerField();generateTelemetry({type: 'TOUCH', id: 'button', target: {id: 'questionunit-mcq-add-answer', ver: '', type: 'button'}});" ng-if="mcqFormData.options.length < 8">{{labels.frmelmnts.lbl.addAnswer || "Add answer"}} </button>
             </div>
           </div>
         </div>

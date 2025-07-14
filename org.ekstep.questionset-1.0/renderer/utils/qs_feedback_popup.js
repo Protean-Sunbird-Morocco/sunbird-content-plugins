@@ -13,7 +13,7 @@ var QSFeedbackPopup = {};
 // }
 QSFeedbackPopup.showGoodJob = function() {
   var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles ||
-               window.parent.ecEditor.getConfig('resourceBundles').consumption.frmelmnts.lbl || {};
+               window.parent.ecEditor.getConfig('resourceBundles').frmelmnts.lbl || {};
 
   var goodJobTemplate = _.template(`
     <div class="popup" tabindex="0" style="z-index: 9999999;">
@@ -72,7 +72,7 @@ QSFeedbackPopup.moveToNextStage = function() {
  * @memberof org.ekstep.questionset.qs_feedback_popup#
  */
 QSFeedbackPopup.showTryAgain = function() {
-  var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || window.parent.ecEditor.getConfig('resourceBundles').consumption.frmelmnts.lbl || {};
+  var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles || window.parent.ecEditor.getConfig('resourceBundles').frmelmnts.lbl || {};
   // var tryAgainTemplate = _.template('<div tabindex="0" class="popup" role="dialog" aria-labelledby="dialog1Title" aria-describedby="dialog1Desc" style="z-index: 9999999;"> <div class="popup-overlay"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img height="100%" width="100%" src="assets/icons/banner2.png"> </div> <div class="sign-board"><img width="40%" id="incorrectButton" alt="Incorrect Icon" src="assets/icons/incorrect.png" tabindex="0"> </div> </div> <div id="popup-buttons-container"> <div onclick="QSFeedbackPopup.hidePopup();QSFeedbackPopup.moveToNextStage();" ng-keydown="$event.keyCode === 13 && QSFeedbackPopup.hidePopup();QSFeedbackPopup.moveToNextStage();" tabindex="0" role="button" aria-label="Next" class="left button">Next</div> <div onclick="QSFeedbackPopup.showRetry();" ng-keydown="$event.keyCode === 13 && QSFeedbackPopup.showRetry();" tabindex="0" role="button" aria-label="Try Again" class="right primary button">Try Again</div> </div> </div> </div> </div>');
   var tryAgainTemplate = _.template(`
   <div tabindex="0" class="popup" role="dialog" aria-labelledby="dialog1Title" aria-describedby="dialog1Desc" style="z-index: 9999999;">
@@ -135,7 +135,7 @@ QSFeedbackPopup.showRetry = function() {
 // }
 QSFeedbackPopup.qsPartialCorrect = function(partialScoreRes) {
   var labels = EkstepRendererAPI.getGlobalConfig().context.resourceBundles ||
-               window.parent.ecEditor.getConfig('resourceBundles').consumption.frmelmnts.lbl || {};
+               window.parent.ecEditor.getConfig('resourceBundles').frmelmnts.lbl || {};
 
   var partialTemplate = _.template(`
     <div class="popup" style="z-index: 9999999;">

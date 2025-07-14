@@ -691,7 +691,7 @@ angular.module('createquestionapp', [])
             ecEditor.dispatchEvent($scope.pluginIdObj.question_create_id + ":showpopup", qMetadata);
           } else {
             ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-              title: $scope.labels?.creation?.frmelmnts?.lbl?.failedToCopyQuestion || 'Failed to copy question...',
+              title: $scope.labels.frmelmnts.lbl.failedToCopyQuestion || 'Failed to copy question...',
               position: 'topCenter',
             });
           }
@@ -722,7 +722,7 @@ angular.module('createquestionapp', [])
         })
       } else {
         ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-          title: $scope.labels?.creation?.frmelmnts?.lbl?.failedToDeleteQuestion || 'Failed to delete question...',
+          title: $scope.labels.frmelmnts.lbl.failedToDeleteQuestion || 'Failed to delete question...',
           position: 'topCenter',
         });
       }
@@ -775,7 +775,7 @@ angular.module('createquestionapp', [])
           $scope.selQuestionObj.max_score = 1;
         });
         ecEditor.dispatchEvent("org.ekstep.toaster:info", {
-          title: $scope.labels?.creation?.frmelmnts?.lbl?.provideDifferentWeightage || 'Each question will carry equal weightage of 1 mark when using Shuffle. To provide different weightage to individual questions please turn off Shuffle.',
+          title: $scope.labels.frmelmnts.lbl.provideDifferentWeightage || 'Each question will carry equal weightage of 1 mark when using Shuffle. To provide different weightage to individual questions please turn off Shuffle.',
           position: 'topCenter',
         });
       } else {

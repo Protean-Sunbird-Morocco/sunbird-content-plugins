@@ -50,18 +50,18 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
         "size": 0
     };
     ctrl.labels = ecEditor.getConfig('resourceBundles') || {};
-    const labels = ecEditor.getConfig('resourceBundles')?.creation?.frmelmnts?.lbl?.assetBrowser || {};
+    const labels = ecEditor.getConfig('resourceBundles').frmelmnts.lbl.assetBrowser || {};
     ctrl.previewMessages = {
-        emptyState : labels?.clickGoToPreview || 'Click Go to preview' ,
-        previewError: labels?.couldNotLoadPreview || 'Could not load the preview. Check the link and try again',
-        invalidYoutubeURL : labels?.pleaseProvideValidYoutubeUrl || 'Please provide valid YouTube URL!',
-        invalidDriveURL : labels?.pleaseProvideValidGoogleUrl || 'Please provide valid Google drive URL!',
-        invalidFile : labels?.pleaseProvideValidFile || 'Please provide valid file!',
-        invalidLicense : labels?.videoNotLicensedByCC || 'The video you are trying to upload is not license by CC-BY. Please try another video.',
-        loadingState: labels?.loadingVideo || 'Loading Video...',
-        fileExceed: labels?.videoFileSizeExceeded || 'Video file size is exceeded',
-        apiError: labels?.pleaseTryAgainLater || 'Please try again later',
-        formError: labels?.pleaseFillDetails || 'Please fill details'
+        emptyState : labels.clickGoToPreview || 'Click Go to preview' ,
+        previewError: labels.couldNotLoadPreview || 'Could not load the preview. Check the link and try again',
+        invalidYoutubeURL : labels.pleaseProvideValidYoutubeUrl || 'Please provide valid YouTube URL!',
+        invalidDriveURL : labels.pleaseProvideValidGoogleUrl || 'Please provide valid Google drive URL!',
+        invalidFile : labels.pleaseProvideValidFile || 'Please provide valid file!',
+        invalidLicense : labels.videoNotLicensedByCC || 'The video you are trying to upload is not license by CC-BY. Please try another video.',
+        loadingState: labels.loadingVideo || 'Loading Video...',
+        fileExceed: labels.videoFileSizeExceeded || 'Video file size is exceeded',
+        apiError: labels.pleaseTryAgainLater || 'Please try again later',
+        formError: labels.pleaseFillDetails || 'Please fill details'
     }
     ctrl.audioType = "audio";
     ctrl.voiceOption = [{
@@ -660,7 +660,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
             $scope.contentService.createContent(data, function (err, res) {
                 if (err) {
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: (labels?.unableToCreateContent || 'Unable to create content!'),
+                        message: (labels.unableToCreateContent || 'Unable to create content!'),
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -676,7 +676,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
 
                 }else{
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: (labels?.unableToCreateContent || 'Unable to create content!'),
+                        message: (labels.unableToCreateContent || 'Unable to create content!'),
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -698,7 +698,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
         $scope.contentService.getPresignedURL(nodeID, fileName, function(err, res){
             if(err){
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: (labels?.errorWhileUploading || 'error while uploading!'),
+                    message: (labels.errorWhileUploading || 'error while uploading!'),
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -718,7 +718,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
         $scope.contentService.uploadDataToSignedURL(signedURL, file, config, function(err, res) {
             if (err) {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: (labels?.errorWhileUploading || 'error while uploading!'),
+                    message: (labels.errorWhileUploading || 'error while uploading!'),
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -741,14 +741,14 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
         $scope.contentService.uploadContent(nodeID, data, config, function(err, resp) {
             if (err) {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: (labels?.unableToUploadContent || 'Unable to upload content!'),
+                    message: (labels.unableToUploadContent || 'Unable to upload content!'),
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
                 uploadIndicator('hide')
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    title: (labels?.contentUploadedSuccessfully || 'content uploaded successfully!'),
+                    title: (labels.contentUploadedSuccessfully || 'content uploaded successfully!'),
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
@@ -816,14 +816,14 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
                 ctrl.uploadingAsset = false;
                 ctrl.uploadBtnDisabled = false;
                 ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                    message: (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (" "+labels?.successfullyUploaded || ' successfully uploaded'),
+                    message: (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (" "+labels.successfullyUploaded || ' successfully uploaded'),
                     position: 'topCenter',
                     icon: 'fa fa-check-circle'
                 });
                 ctrl.cancel();
             } else {
                 ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                    message: (labels?.errorInUploading +" " || "Error in Uploading ") + (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (labels?.pleaseTryAgain || ", please try again!"),
+                    message: (labels.errorInUploading +" " || "Error in Uploading ") + (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (labels.pleaseTryAgain || ", please try again!"),
                     position: 'topCenter',
                     icon: 'fa fa-warning'
                 });
@@ -1162,7 +1162,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
         }
     }
     ctrl.isValidYoutube = function (url) {
-        var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\.+&v=))((\w|-){11})(?:\S+)?$/;
         if (url && url.match(p)) {
             return url.match(p)[1];
         }
@@ -1200,7 +1200,7 @@ angular.module('assetbrowserapp').controller('browsercontroller', ['$scope', '$i
     }
     ctrl.toastManager = function(message, type){
         ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-            message: (labels?.errorInUploading + " "||"Error in Uploading ") + (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (labels?.pleaseTryAgain ||", please try again!"),
+            message: (labels.errorInUploading + " "||"Error in Uploading ") + (instance.mediaType).charAt(0).toUpperCase() + (instance.mediaType).slice(1) + (labels.pleaseTryAgain ||", please try again!"),
             position: 'topCenter',
             icon: 'fa fa-warning'
         });

@@ -60,7 +60,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
      * 
      */
     $scope.labels = ecEditor.getConfig('resourceBundles') || {};
-    $scope.headerMessage = $scope.labels.creation?.frmelmnts?.lbl?.editDetails || 'Edit Details'
+    $scope.headerMessage = $scope.labels.frmelmnts.lbl.editDetails || 'Edit Details'
 
     /**
      * 
@@ -326,7 +326,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 } else {
                     console.error("Fails to save the data", err);
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: $scope.labels.creation?.frmelmnts?.lbl?.unableToUpdateContentPleaseTryAgainLater || 'Unable to update the content, Please try again!',
+                        message: $scope.labels.frmelmnts.lbl.unableToUpdateContentPleaseTryAgainLater || 'Unable to update the content, Please try again!',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -626,8 +626,8 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 var map = labelMap[field.code];
                 if (map) {
                     // Use the translation if it exists, otherwise keep the original
-                    field.label = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.label] || field.label;
-                    field.placeholder = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.placeholder] || field.placeholder;
+                    field.label = labels.frmelmnts.lbl.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.frmelmnts.lbl.dynamicForm[map.placeholder] || field.placeholder;
                 }
             });
             $scope.fixedLayoutConfigurations = _.uniqBy(layoutConfigurations.fixedLayout, 'code');
@@ -635,8 +635,8 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 var map = labelMap[field.code];
                 if (map) {
                     // Use the translation if it exists, otherwise keep the original
-                    field.label = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.label] || field.label;
-                    field.placeholder = labels.creation?.frmelmnts?.lbl?.dynamicForm[map.placeholder] || field.placeholder;
+                    field.label = labels.frmelmnts.lbl.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.frmelmnts.lbl.dynamicForm[map.placeholder] || field.placeholder;
                 }
             });
             $scope.dynamicLayoutConfigurations = _.sortBy(_.uniqBy(layoutConfigurations.dynamicLayout, 'code'), 'index');

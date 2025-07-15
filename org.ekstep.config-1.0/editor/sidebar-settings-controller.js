@@ -94,11 +94,14 @@ angular.module('editorApp')
             var labels = ecEditor.getConfig('resourceBundles') || {};
             var labelMap = {
                 title: { label: 'title', placeholder: 'titlePlaceholder' },
-                shuffle_questions: { label: 'shuffleQuestions', placeholder: 'shuffleQuestionsPlaceholder' },
-                show_feedback: { label: 'showFeedback', placeholder: 'showFeedbackPlaceholder' },
-                btn_edit: { label: 'editButton', placeholder: 'editButtonPlaceholder' },
-                total_items: { label: 'totalItems', placeholder: 'totalItemsPlaceholder' },
-                max_score: { label: 'maxScore', placeholder: 'maxScorePlaceholder' },
+                shuffle_questions: { label: 'shuffle_questions', placeholder: 'shuffleQuestionsPlaceholder' },
+                show_feedback: { label: 'show_feedback', placeholder: 'showFeedbackPlaceholder' },
+                btn_edit: { label: 'btn_edit', placeholder: 'editButtonPlaceholder' },
+                total_items: { label: 'total_items', placeholder: 'totalItemsPlaceholder' },
+                max_score: { label: 'max_score', placeholder: 'maxScorePlaceholder' },
+                genieControls: { label: 'genieControls', placeholder: 'genieControlsPlaceholder' },
+                instructions: { label: 'instructions', placeholder: 'instructionsPlaceholder' },
+                color: { label: 'color', placeholder: 'colorPlaceholder' }
             };
 
 

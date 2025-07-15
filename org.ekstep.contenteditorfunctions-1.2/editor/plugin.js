@@ -238,14 +238,16 @@ org.ekstep.contenteditor.basePlugin.extend({
             this.popUpValues.popUpIcon = 'circle check green';
             this.popUpValues.showCloseButton = true;
             this.popUpValues.saveNotificationCloseButton = 'saveSuccessNotificationCloseButton';
+            this.popUpValues.close = labels.frmelmnts.lbl.close || 'Close';
         } else if (message === 'error') {
             this.popUpValues.headerMsg = labels.frmelmnts.lbl.failedToSaveContent || 'Failed to save Content';
             this.popUpValues.popUpIcon = 'circle remove red';
             this.popUpValues.showCloseButton = true;
             this.popUpValues.saveNotificationCloseButton = 'saveFailNotificationCloseButton';
+            this.popUpValues.close = labels.frmelmnts.lbl.close || 'Close';
         }
         if (message === 'saving') {
-            this.popUpValues.headerMsg = 'Saving content please wait...';
+            this.popUpValues.headerMsg = labels.frmelmnts.lbl.savingContentPleaseWait || 'Saving content please wait...';
             this.popUpValues.showCloseButton = false;
         }
     },

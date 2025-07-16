@@ -77,16 +77,27 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
     $scope.disableTocActionBtn = false;
     $scope.loader = false;
     $scope.labels = ecEditor.getConfig('resourceBundles') || {};
+    // Helper function to safely get nested property with fallback
+    const getLabel = (path, fallback) => {
+        const parts = path.split('.');
+        let value = $scope.labels;
+        for (const part of parts) {
+            if (!value || typeof value !== 'object') return fallback;
+            value = value[part];
+        }
+        return value !== undefined ? value : fallback;
+    };
+
     $scope.CONSTANTS = {
-        tocDownloadFailed: $scope.labels.frmelmnts.lbl.unableToDownloadContentTryAgain || 'Unable to download the content, please try again later',
-        tocDownloadSuccess: $scope.labels.frmelmnts.lbl.tableOfContentDownloaded || 'Table of Content downloaded!',
-        tocUpdateHeader: $scope.labels.frmelmnts.lbl.updateMetadataAttributesViaCSV || 'Update Table of Contents Metadata attributes via CSV',
-        tocUpdateDescription: $scope.labels.frmelmnts.lbl.tocUpdateDescription || 'Please note that no sections can be added or removed through this update, only the values of the attributes can be changed.',
-        tocUpdateBtnUpload: $scope.labels.frmelmnts.lbl.upload || 'Upload',
-        tocUpdateBtnClose: $scope.labels.frmelmnts.lbl.close || 'Close',
-        tocUpdateSampleCsvFile: $scope.labels.frmelmnts.lbl.sampleUpdateCSVfile || 'Sample update csv file',
+        tocDownloadFailed: getLabel('frmelmnts.lbl.unableToDownloadContentTryAgain', 'Unable to download the content, please try again later'),
+        tocDownloadSuccess: getLabel('frmelmnts.lbl.tableOfContentDownloaded', 'Table of Content downloaded!'),
+        tocUpdateHeader: getLabel('frmelmnts.lbl.updateMetadataAttributesViaCSV', 'Update Table of Contents Metadata attributes via CSV'),
+        tocUpdateDescription: getLabel('frmelmnts.lbl.tocUpdateDescription', 'Please note that no sections can be added or removed through this update, only the values of the attributes can be changed.'),
+        tocUpdateBtnUpload: getLabel('frmelmnts.lbl.upload', 'Upload'),
+        tocUpdateBtnClose: getLabel('frmelmnts.lbl.close', 'Close'),
+        tocUpdateSampleCsvFile: getLabel('frmelmnts.lbl.sampleUpdateCSVfile', 'Sample update csv file'),
         tocUpdateSampleCsvFileLink: ecEditor.getConfig('absURL') + ecEditor.resolvePluginResource(plugin.id, plugin.ver, 'assets/updatesamplecsvfile.csv'),
-        contentDownloadStarted: $scope.labels.frmelmnts.lbl.contentDownloadStarted || 'Content download started!',
+        contentDownloadStarted: getLabel('frmelmnts.lbl.contentDownloadStarted', 'Content download started!'),
     }
     $scope.contentLock = ecEditor.getConfig('lock');
     $scope.dataChanged = false;

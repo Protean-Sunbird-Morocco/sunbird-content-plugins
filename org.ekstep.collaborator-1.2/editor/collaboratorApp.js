@@ -1,6 +1,7 @@
 
 angular.module('collaboratorApp', ['angular-inview'])
     .controller('collaboratorCtrl', ['$scope', '$timeout', 'instance', function ($scope, $timeout, instance) {
+        $scope.labels = ecEditor.getConfig('resourceBundles').frmelmnts.lbl || {};
         $scope.inViewLogs = [];
         $scope.searchRes = { count: 0, content: [], isEmptyResponse: false, errorMessage: '', searchStatus: 'start' };
         $scope.isAddCollaboratorTab = false

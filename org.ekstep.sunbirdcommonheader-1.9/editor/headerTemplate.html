@@ -122,12 +122,12 @@
                                 data-position="bottom center" ng-click="sendForReview(); generateTelemetry({ id:'reviewButton',subtype: 'review', target: 'reviewbutton'});">
                                 <i class="send icon"></i>
                             </div>
-                            <div ng-show="hideLimitedSharingBtn" class="ui pointing dropdown icon button">
+                            <!-- <div ng-show="hideLimitedSharingBtn" class="ui pointing dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item" ng-click="limitedSharing(); generateTelemetry({ id:'button',subtype: 'limit-sharing', target:'limitedSharing'});"> {{labels.frmelmnts.lbl.limitedSharing || "Limited sharing"}}</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div ng-show="!publishMode && !isFlagReviewer && isReviewCommentsPresent" class="icon-box popup-item label-icon-box"
                             data-content="{{labels.frmelmnts.lbl.reviewComments || 'Review comments'}}" data-variation="tiny inverted" data-position="bottom center"
@@ -163,12 +163,12 @@
                                 data-position="bottom center" ng-click="previewContent();">
                                 <i class="fa fa-eye"></i>
                             </div>
-                            <div class="ui pointing dropdown icon button">
+                            <!-- <div class="ui pointing dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item" ng-click="previewContent('start');"> {{labels.frmelmnts.lbl.previewFromStart || "Preview from start"}}</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

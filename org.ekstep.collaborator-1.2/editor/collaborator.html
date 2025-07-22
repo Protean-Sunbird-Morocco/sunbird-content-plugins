@@ -3,14 +3,14 @@
     <div class="ui active longer modal fullscreen-modal">
         <!-- HEADER-->
         <div class="ui clearing segment overlap-all margin-bottom-0 header-height">
-            <strong class="ui left floated header header-title">Collaborators</strong>
+            <strong class="ui left floated header header-title">{{labels.collaborators || 'Collaborators'}}</strong>
 
             <div class="ui right floated header" ng-if="!isAddCollaboratorTab">
                 <span><i class="close link icon" id="close-button" ng-click="closePopup()"></i><span>
             </div>
             <div class="ui right floated header searcher" ng-if="isAddCollaboratorTab">
                 <div class="ui action input search-reset-keyword-field">
-                    <input type="text" id="user-search" placeholder="Search..." autocomplete="off" spellcheck="false" ng-model="searchKeyword" ng-keyup="searchKeyword.length >= 3 ? searchByKeyword() : resetSearch()">
+                    <input type="text" id="user-search" placeholder="{{labels.searchPlaceholder || 'Search...'}}" autocomplete="off" spellcheck="false" ng-model="searchKeyword" ng-keyup="searchKeyword.length >= 3 ? searchByKeyword() : resetSearch()">
                     <div class="ui tiny inline loader search-loader"></div>
                     <div class="search-element" id="refresh-button" ng-show="(searchRes.searchStatus == 'end' && searchKeyword.length >= 3 )" ng-click="refreshSearch()" title="refresh">
                         <i class="close link icon"></i>
@@ -24,10 +24,10 @@
                     <li class="searchResult" ng-repeat="user in searchRes.content | filter: filterSearch | limitTo:5" ng-show="!user.isCollaborator">
                         <p ng-click="selectUser(user)">{{user.firstName + ' ' + user.lastName}}</p>
                     </li>
-                    <li id="view-all-results" ng-if="searchRes.content.length > 5" ng-click="viewAllResults()" class="color-blue view-all"><span>View All Results</span></li>
+                    <li id="view-all-results" ng-if="searchRes.content.length > 5" ng-click="viewAllResults()" class="color-blue view-all"><span>{{labels.viewAllResults || 'View All Results'}}</span></li>
                 </ul>
                 <ul class="searchList" ng-show="!searchRes.content.length && searchKeyword.length >= 3 && searchRes.isEmptyResponse">
-                    <li class="searchResultMsg"><strong>No Results Found</strong></li>
+                    <li class="searchResultMsg"><strong>{{labels.noResultsFound || 'No Results Found'}}</strong></li>
                 </ul>
                 <ul class="searchList" ng-show="searchRes.errorMessage.length  && (searchKeyword.length >= 3)">
                     <strong class="searchResultMsg">{{searchRes.errorMessage}}</strong>
@@ -38,22 +38,22 @@
         <!--END OF HEADER -->
         <!--BODY-->
         <div class="ui pointing secondary menu tab-bar">
-            <a class="item active" ng-if="(isContentOwner || isRootOrgAdmin)" style="padding-left:20px;padding-top: 15px;padding-bottom: 15px;" data-tab="addCollaboratorTab" ng-click="selectTab($event)">Add Collaborators</a>
-            <a class="item" ng-class="(isContentOwner || isRootOrgAdmin ) ? '' : 'active'" data-tab="userListTab" ng-click="selectTab($event)">Manage Collaborators</a>
+            <a class="item active" ng-if="(isContentOwner || isRootOrgAdmin)" style="padding-left:20px;padding-top: 15px;padding-bottom: 15px;" data-tab="addCollaboratorTab" ng-click="selectTab($event)">{{labels.addCollaborators || 'Add Collaborators'}}</a>
+            <a class="item" ng-class="(isContentOwner || isRootOrgAdmin ) ? '' : 'active'" data-tab="userListTab" ng-click="selectTab($event)">{{labels.manageCollaborators || 'Manage Collaborators'}}</a>
         </div>
         <div class="ui tab segment height-100 body-content" ng-class="(isContentOwner || isRootOrgAdmin ) ? 'active' : ''" data-tab="addCollaboratorTab">
-            <div class="ui active inverted dimmer" ng-if="isLoading"><div class="ui large text loader">Loading</div></div>
+            <div class="ui active inverted dimmer" ng-if="isLoading"><div class="ui large text loader">{{labels.loading || 'Loading'}}</div></div>
             <!-- FOR ADD COLLABORATORS -->
             <div ng-if="isAddCollaboratorTab">
                 <div class="ui grid">
-                    <div class="ten wide column"><div ng-if="users.count"><strong>Showing {{users.count}} out of {{users.length}} results</strong></div></div>
+                    <div class="ten wide column"><div ng-if="users.count"><strong>{{labels.showing || 'Showing'}} {{users.count}} {{labels.outOf || 'out of'}} {{users.length}} {{labels.results || 'results'}}</strong></div></div>
                     <div class="two wide right floated column" ng-if="users.count" style="padding-right:19px">
                         <div class="ui dropdown float-right">
-                            <div class="text"><strong>Sort By</strong></div>
+                            <div class="text"><strong>{{labels.sortBy || 'Sort By'}}</strong></div>
                             <i class="dropdown icon"></i>
                             <div class="menu dropdown-menu">
-                              <div class="item" data-value="firstName"><strong>Name</strong></div>
-                              <div class="item" data-value="organisations"><strong>Organisation</strong></div>
+                              <div class="item" data-value="firstName"><strong>{{labels.name || 'Name'}}</strong></div>
+                              <div class="item" data-value="organisations"><strong>{{labels.organisation || 'Organisation'}}</strong></div>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                                             <div ng-hide="true">{{user.email}}</div>
                                             <div>
                                                 <span ng-hide="true">{{user.phone}}</span>
-                                                <button class="right floated clear-btn color-blue" style="padding-right: 0" ng-if="!user.isSelected" ng-click="toggleSelectionUser(user, $index, 'users')"><strong>+ADD</strong></button>
+                                                <button class="right floated clear-btn color-blue" style="padding-right: 0" ng-if="!user.isSelected" ng-click="toggleSelectionUser(user, $index, 'users')"><strong>{{labels.add || 'ADD'}}</strong></button>
                                                 <div class="ui right floated compact segment" style="padding:0; border: 0;margin:0;" ng-if="user.isSelected" ng-click="toggleSelectionUser(user, $index, 'users')">
                                                     <div class="ui mini fitted toggle checkbox" style="transform:scale(0.7)">
                                                         <input type="checkbox" checked><label></label>
@@ -82,10 +82,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="noCollaboratorMsg" ng-if="!users.length" class="ui negative message width-100"><div class="header">No users found</div></div>
+                                <div id="noCollaboratorMsg" ng-if="!users.length" class="ui negative message width-100"><div class="header">{{labels.noUsersFound || 'No users found'}}</div></div>
                             </div>
                             <div class="content-search-img" ng-if="users.length>50">
-                                <img class="ui centered tiny image" src="{{contentNotFoundImage}}"><p>Didn’t find what you were looking for? Try searching for something more specific</p>
+                                <img class="ui centered tiny image" src="{{contentNotFoundImage}}"><p>{{labels.searchTip || 'Didn’t find what you were looking for? Try searching for something more specific'}}</p>
                             </div>
                         </div>
                     </div>
@@ -95,15 +95,15 @@
         </div>
         <div class="ui tab segment body-content" ng-class="(isContentOwner || isRootOrgAdmin ) ? '' : 'active'" data-tab="userListTab">
             <div class="ui active inverted dimmer" ng-if="isLoading">
-                <div class="ui large text loader">Loading</div>
+                <div class="ui large text loader">{{labels.loading || 'Loading'}}</div>
             </div>
             <!-- FOR SHOW COLLABORATORS-->
             <div class="ui active inverted dimmer" ng-if="isLoading">
-                    <div class="ui large text loader">Loading</div>
+                    <div class="ui large text loader">{{labels.loading || 'Loading'}}</div>
             </div>
             <div class="height-100" ng-if="!isAddCollaboratorTab">
                 <div class="ui grid">
-                    <div class="twelve wide column"><div ng-if="collaborators.length"><strong>{{collaborators.length}} collaborators exists</strong></div></div>
+                    <div class="twelve wide column"><div ng-if="collaborators.length"><strong>{{collaborators.length}} {{labels.collaboratorsCount || 'collaborators exists'}}</strong></div></div>
                 </div>
                 <div class="margin-left-right-0 margin-top-5">
                     <div class="ui grid div-scroll">
@@ -119,7 +119,7 @@
                                             <div ng-hide="true">{{user.email}}</div>
                                             <div>
                                                 <span ng-hide="true">{{user.phone}}</span>
-                                                <button class="right floated clear-btn color-danger" style="padding-right:0;" ng-if="!user.isSelected  && (isContentOwner || isRootOrgAdmin)" ng-click="toggleSelectionUser(user, $index, 'collaborators')"><strong>REMOVE</strong></button>
+                                                <button class="right floated clear-btn color-danger" style="padding-right:0;" ng-if="!user.isSelected  && (isContentOwner || isRootOrgAdmin)" ng-click="toggleSelectionUser(user, $index, 'collaborators')"><strong>{{labels.remove || 'REMOVE'}}</strong></button>
 
                                                 <div class="ui right floated compact segment" style="padding:0; border: 0;margin:0;" ng-if="user.isSelected  && (isContentOwner || isRootOrgAdmin)" ng-click="toggleSelectionUser(user, $index, 'collaborators')">
 
@@ -132,7 +132,7 @@
                                     </div>
                                 </div>
                                 <div id="noCollaboratorMsg" ng-if="!collaborators.length" class="ui negative message width-100">
-                                    <div class="header">No collaborators found for this content</div>
+                                    <div class="header">{{labels.noCollaborators || 'No collaborators found for this content'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -149,9 +149,9 @@
                 <div class="ui grid">
                     <div class="twelve wide column">
 
-                        <button ng-if="isAddCollaboratorTab" id="done-button" class="ui right floated color-white background-blue tiny button next-btn" ng-disabled="!users.selectedCount" ng-click="addCollaborators()">Done</button>
+                        <button ng-if="isAddCollaboratorTab" id="done-button" class="ui right floated color-white background-blue tiny button next-btn" ng-disabled="!users.selectedCount" ng-click="addCollaborators()">{{labels.done || 'Done'}}</button>
 
-                        <button ng-if="!isAddCollaboratorTab" id="done-button" class="ui right floated color-white background-blue tiny button next-btn" ng-disabled="!collaborators.selectedCount || ! (isContentOwner || isRootOrgAdmin)" ng-click="removeCollaborators()">Done</button>
+                        <button ng-if="!isAddCollaboratorTab" id="done-button" class="ui right floated color-white background-blue tiny button next-btn" ng-disabled="!collaborators.selectedCount || ! (isContentOwner || isRootOrgAdmin)" ng-click="removeCollaborators()">{{labels.done || 'Done'}}</button>
                     </div>
                 </div>
             </div>

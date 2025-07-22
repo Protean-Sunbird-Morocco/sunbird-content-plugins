@@ -109,7 +109,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
     $scope.hidePreviewBtn =  _.isUndefined(ecEditor.getConfig('headerConfig') && (ecEditor.getConfig('headerConfig').showPreview))? true: (ecEditor.getConfig('headerConfig').showPreview);
     $scope.hideLimitedSharingBtn = _.isUndefined(ecEditor.getConfig('headerConfig') && (ecEditor.getConfig('headerConfig').limitedsharing))? true: (ecEditor.getConfig('headerConfig').limitedsharing);
     $scope.showEditDetailsOption = _.isUndefined(ecEditor.getConfig('headerConfig') && (ecEditor.getConfig('headerConfig').showEditDetails)) ? true : (ecEditor.getConfig('headerConfig').showEditDetails);
-    $scope.collaboratorTooltip = 'Add Collaborator';
+    $scope.collaboratorTooltip = $scope.labels.frmelmnts.lbl.addCollaborators || 'Add Collaborator';
     $scope.isRootOrgAdmin = _.has(ecEditor.getContext('user'),'isRootOrgAdmin') ?  ecEditor.getContext('user').isRootOrgAdmin : false;
     /*
      * Update ownership list when adding and removing the content.
@@ -201,7 +201,7 @@ angular.module('org.ekstep.sunbirdcommonheader:app', ["Scope.safeApply", "yaru22
             $scope.isReviewCommentsPresent = true;
             $scope.$safeApply();
         }
-        $scope.collaboratorTooltip = ((ecEditor.getContext('uid') === meta.createdBy) || $scope.isRootOrgAdmin ) ? 'Add Collaborator' : 'View Collaborator';
+        $scope.collaboratorTooltip = ((ecEditor.getContext('uid') === meta.createdBy) || $scope.isRootOrgAdmin ) ? ($scope.labels.frmelmnts.lbl.addCollaborators || 'Add Collaborator') : ($scope.labels.frmelmnts.lbl.viewCollaborators || 'View Collaborator');
         $scope.hideCollaboratorBtn = (_.isUndefined(ecEditor.getConfig('headerConfig') && (ecEditor.getConfig('headerConfig').managecollaborator)))? true: ((ecEditor.getConfig('headerConfig').managecollaborator && ((meta.status === 'Draft') || $scope.isRootOrgAdmin ))  ? true : ecEditor.getConfig('headerConfig').managecollaborator);
         switch (meta.mimeType) {
             case "application/vnd.ekstep.ecml-archive":

@@ -26,6 +26,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
     /**
      * @property       - Default error message for the fields
      */
+    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
     $scope.DEFAULT_ERROR_MESSAGE = $scope.labels.frmelmnts.lbl.invalidInput || 'Invalid Input'
 
     /**
@@ -59,7 +60,6 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
     /**
      * 
      */
-    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
     $scope.headerMessage = $scope.labels.frmelmnts.lbl.editDetails || 'Edit Details'
 
     /**

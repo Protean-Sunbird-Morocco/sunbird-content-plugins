@@ -123,7 +123,7 @@
                     <div class="description">{{ selQuestion.description }}</div>
                   </div>
                   <div class="qb-question-action three wide column">
-                    <span class="action-btn"  title="remove question" data-inverted="">
+                    <span class="action-btn" data-tooltip="{{labels.frmelmnts.lbl.removeQuestion || 'Remove question'}}" data-inverted="">
                       <i class="remove icon" id="remove-question-button" ng-click="removeQuestion(selQuestion);generateTelemetry({type: 'click', subtype: 'select', id: 'button'},$event)"></i>
                     </span>
                     <span class="action-btn" ng-show="(currentUserId == selQuestion.createdBy)  && (selQuestion.version != '1')"  title="edit question" data-inverted="">

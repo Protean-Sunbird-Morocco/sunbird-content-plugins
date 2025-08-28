@@ -19,7 +19,7 @@
                                 </div>
                                     <div class="advanceFilterDiv" ng-click="showAdvancedFilter = !showAdvancedFilter">
                                         <i class="dropdown icon" ng-if="showAdvancedFilter"></i> <i class="dropdown icon" ng-if="!showAdvancedFilter" style="transform: rotate(270deg);"></i>
-                                        Advanced Filters
+                                        {{labels.frmelmnts.lbl.advanceFilters || "Advanced Filters"}}
                                     </div>
                                     <div class="filter-column" ng-class="(dynamicField.code == 'searchText')? 'twelve wide column': 'four wide column'  " ng-repeat="dynamicField in dynamicLayoutConfigurations" ng-show="showAdvancedFilter">
                                     <!-- SEARCH INPUT FIELD -->
@@ -42,7 +42,7 @@
                                             </select>
                                         </div>
                                         <div ng-show="!metaForm[dynamicField.code].$valid " class="ui pointing red basic label ">
-                                            Please Select
+                                            {{labels.frmelmnts.lbl.pleaseSelect || "Please Select"}}
                                         </div>
                                     </div>
                                     <!-- MULTIPLE SELECT INPUT FIELD -->
@@ -58,7 +58,7 @@
                                             </div>
                                         </div>
                                         <div ng-show="!metaForm[dynamicField.code].$valid  " class="ui pointing red basic label ">
-                                            Please Select
+                                            {{labels.frmelmnts.lbl.pleaseSelect || "Please Select"}}
                                         </div>
                                     </div>
                                     <div id="{{dynamicField.code}} " class="field " ng-class="{ 'error': (!contentMeta[dynamicField.code] && dynamicField.required) , 'required': dynamicField.required} " name="{{dynamicField.code}}" ng-if="dynamicField.inputType==='conceptselector'">

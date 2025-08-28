@@ -50,28 +50,30 @@ org.ekstep.mcq.baseComponent = {
 // var down_arrow = MCQController.pluginInstance.getDefaultAsset('down_arrow.png');
 
 org.ekstep.mcq.questionComponent = {
+    formatQuestionText: function(text) {
+        if (!text) return '';
+        let cleanText = text.replace(/<\/?p[^>]*>/g, '').trim();
+        return '<pre>' + cleanText + '</pre>';
+    },
     generateQuestionComponent: function (option) {
         if (option && option.layout) {
                 return '<div class="question-container-big <% if(!question.data.question.image){ %> no-qimage <% } %>">\
                 <div class="text-image-container">\
                     <div class="hiding-container">\
                         <div class="expand-container">\
-                            <%= question.data.question.text %>\
+                            <%= org.ekstep.mcq.questionComponent.formatQuestionText(question.data.question.text) %>\
                         </div>\
-                        <div class="expand-button" tabindex="0" onclick="org.ekstep.mcq.questionComponent.toggleQuestionText({layout:\'qcontainer-big\'})">\
-                            <img \ class="exp-button" src="" id="org-ekstep-contentrenderer-questionunit-questionComponent-downArwImg"" /> \
-                        </div> \
                     </div> \
                     <% if(question.data.question.image) { %>\
                         <div  class="image-container <% if(!question.data.question.text){ %> no-text <% } %> \ "> \
                             <img  data-image="<%= question.data.question.image %>" id="org-ekstep-questionunit-questionComponent-qimage" class="qimage" src="" /> \
                             <img class="zoom-icon" tabindex="0" onclick="org.ekstep.mcq.questionComponent.showImageModel(event, undefined, \'org-ekstep-questionunit-questionComponent-qimage\')" class="image-container <% if(!question.data.question.text){ %> no-text <% } %> \ " src="" id="org-ekstep-contentrenderer-questionunit-questionComponent-ZoomImg"> \
                         </div> \
-                    <% } %>\
+                    <% }%>\
                 </div> \
                 <% if(question.data.question.audio) { %>\
                     <div class="audio-container"> \
-                        <img tabindex="0" onclick="org.ekstep.mcq.questionComponent.playAudio({src:\'<%= question.data.question.audio %>\'})" src=""  id="org-ekstep-contentrenderer-questionunit-questionComponent-AudioImg"/> \
+                        <img tabindex="0" onclick="org.ekstep.mcq.questionComponent.playAudio({src:\'<%= question.data.question.audio %>\'})" src=""  id="org.ekstep-contentrenderer-questionunit-questionComponent-AudioImg"/> \
                     </div> \
                 <% } %>\
             </div><script>org.ekstep.mcq.questionComponent.onDomReady();</script>'
@@ -91,11 +93,8 @@ org.ekstep.mcq.questionComponent = {
         <% } %>\
             <div class="hiding-container">\
                 <div class="expand-container <% if(question.data.question.image || question.data.question.audio){ %> with-media <% } %>">\
-                <%= question.data.question.text %>\
+                <%= org.ekstep.mcq.questionComponent.formatQuestionText(question.data.question.text) %>\
                 </div>\
-            </div>\
-            <div class="expand-button" tabindex="0" onclick="org.ekstep.mcq.questionComponent.toggleQuestionText()">\
-                <img class="exp-button" src="" id="org-ekstep-contentrenderer-questionunit-questionComponent-downArwImg"/>\
             </div>\
         </div><script>org.ekstep.mcq.questionComponent.onDomReady();</script>\
         ';

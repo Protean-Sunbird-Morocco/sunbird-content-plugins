@@ -272,9 +272,9 @@ org.ekstep.contentrenderer.questionUnitPlugin = Plugin.extend({
   */
   getTelemetryParamsValue: function(data) {
     var valueObj = {}, instance = this;
-    if(!_.isUndefined(data.text) && data.text.length > 0) valueObj.text = instance.extractHTML(data.text);
-    if(!_.isUndefined(data.image) && data.image.length > 0) valueObj.image = data.image;
-    if(!_.isUndefined(data.audio) && data.audio.length > 0) valueObj.audio = data.audio;
+    if(data?.text && data.text.length > 0) valueObj.text = instance.extractHTML(data.text);
+    if(data?.image && data.image.length > 0) valueObj.image = data.image;
+    if(data?.audio && data.audio.length > 0) valueObj.audio = data.audio;
     return JSON.stringify(valueObj);
   }
 });

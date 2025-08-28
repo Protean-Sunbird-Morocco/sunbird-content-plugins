@@ -1,6 +1,7 @@
 
 angular.module('collaboratorApp', ['angular-inview'])
     .controller('collaboratorCtrl', ['$scope', '$timeout', 'instance', function ($scope, $timeout, instance) {
+        $scope.labels = ecEditor.getConfig('resourceBundles').frmelmnts.lbl || {};
         $scope.inViewLogs = [];
         $scope.searchRes = { count: 0, content: [], isEmptyResponse: false, errorMessage: '', searchStatus: 'start' };
         $scope.isAddCollaboratorTab = false
@@ -55,7 +56,7 @@ angular.module('collaboratorApp', ['angular-inview'])
                     console.error('Unable to fetch collaborators', err);
                     $scope.isLoading = false;
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to fetch collaborators',
+                        message: $scope.labels.unableToFetchCollaborators || 'Unable to fetch collaborators',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -183,13 +184,13 @@ angular.module('collaboratorApp', ['angular-inview'])
                 $scope.userService.updateCollaboratorsFromAdmin(ecEditor.getContext('contentId'), $scope.updateCollaboratorRequest, function (err, res) {
                 if (err) {
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to update collaborator',
+                        message: $scope.labels.unableToUpdateCollaborators || 'Unable to update collaborator',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
                 } else {
                     ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                        message: 'Collaborators updated successfully',
+                        message: $scope.labels.collaboratorsUpdated || 'Collaborators updated successfully',
                         position: 'topCenter',
                         icon: 'fa fa-check-circle'
                     });
@@ -210,13 +211,13 @@ angular.module('collaboratorApp', ['angular-inview'])
                 $scope.userService.updateCollaborators(ecEditor.getContext('contentId'), $scope.updateCollaboratorRequest, function (err, res) {
                 if (err) {
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to update collaborator',
+                        message: $scope.labels.unableToUpdateCollaborators || 'Unable to update collaborator',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
                 } else {
                     ecEditor.dispatchEvent("org.ekstep.toaster:success", {
-                        message: 'Collaborators updated successfully',
+                        message: $scope.labels.collaboratorsUpdated || 'Collaborators updated successfully',
                         position: 'topCenter',
                         icon: 'fa fa-check-circle'
                     });
@@ -349,7 +350,7 @@ angular.module('collaboratorApp', ['angular-inview'])
                 if (err) {
                     $scope.searchRes.content = [];
                     $scope.searchRes.isEmptyResponse = true;
-                    $scope.searchRes.errorMessage = "Oops! Something went wrong. Please try again later.";
+                    $scope.searchRes.errorMessage = $scope.labels.somethingWentWrong || 'Oops! Something went wrong. Please try again later.';
                 } else {
                     $scope.searchRes.searchStatus = "end";
                     

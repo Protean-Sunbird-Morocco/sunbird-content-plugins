@@ -155,9 +155,10 @@ body {
 .custom-5-wide .custom-row-2 {
     position: relative;
     height: 30px;
-    float: right;
     font-size: 12px !important;
     top: 0;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .custom-5-wide .custom-row-2 .icon,
@@ -460,3 +461,9 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 /* End of Bulk Request Popup */
+
+body[dir="rtl"] .custom-5-wide .custom-row-2 .icon-group-2 {
+    float: left;
+    display: flex;
+    direction: ltr;
+}

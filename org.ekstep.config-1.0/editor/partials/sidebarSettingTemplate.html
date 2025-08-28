@@ -69,10 +69,10 @@ a.item.at-menu-item.popup-item.active {
 </style>
 <div ng-controller="org.ekstep.config:configController">
     <div class="ui mini compact menu item sidebarConfig sidebarHeadTab three">
-        <a title="Customise" id="customizeOptionSideBar" class="item active" id="settingsTab" data-tab="settings" ng-click="showConfig(); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> <span class="large-screen-only">Customise</span> </a>
+        <a title="Customise" id="customizeOptionSideBar" class="item active" id="settingsTab" data-tab="settings" ng-click="showConfig(); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> <span class="large-screen-only">{{labels.frmelmnts.lbl.sidebarSettings.customise || 'Customise'}}</span> </a>
         <a title="Actions" id="actionsOptionSideBar" class="item {{selectedObject.stage ? 'disabled disabled-link' : ''}}" data-tab="actions" ng-click="showActions(); fireSidebarTelemetry({id: 'actions'}, 'config')"><i class="tasks icon"></i> 
-        <span class="large-screen-only">Actions</span> </a>
-        <a title="Properties" id="propertiesOptionSideBar" class="item" data-tab="info" ng-click="showProperties(); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> <span class="large-screen-only">Properties</span> </a>
+        <span class="large-screen-only">{{labels.frmelmnts.lbl.sidebarSettings.actions || 'Actions'}}</span> </a>
+        <a title="Properties" id="propertiesOptionSideBar" class="item" data-tab="info" ng-click="showProperties(); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> <span class="large-screen-only">{{labels.frmelmnts.lbl.sidebarSettings.properties || 'Properties'}}</span> </a>
     </div>
     <div class="ui active tab segment sidebarContent" data-tab="settings">
         <div ng-repeat="config in pluginConfig">
@@ -158,7 +158,7 @@ a.item.at-menu-item.popup-item.active {
                 <div class="ui form" ng-switch-when="button">
                     <div class="field">
                         <label ng-show="config.title">{{config.title}}</label>
-                        <button class="ui button" ng-click="fireEvent({'id':'org.ekstep.config:invoke', 'data': {'type': config.dataType, 'event': config.onclick}}); fireSidebarTelemetry({id: config.propertyName}, config.dataType)">{{configData[config.PropertyName]}}</button>
+                        <button class="ui button" ng-click="fireEvent({'id':'org.ekstep.config:invoke', 'data': {'type': config.dataType, 'event': config.onclick}}); fireSidebarTelemetry({id: config.propertyName}, config.dataType)">{{labels.frmelmnts.lbl[configData[config.PropertyName].toLowerCase()]}}</button>
                     </div>
                 </div>
                 <div class="ui form" ng-switch-when="featureButtonToggle">
@@ -178,7 +178,7 @@ a.item.at-menu-item.popup-item.active {
     <div class="ui tab segment sidebarContent" data-tab="actions">
         <div class="ui form" style="height:40px; display:flex; align-items:center;">
             <div class="field">
-                <h5 class="ui header actions-header" style="margin:0;">On click</h5>
+                <h5 class="ui header actions-header" style="margin:0;">{{labels.frmelmnts.lbl.sidebarSettings.onClick || "On click"}}</h5>
                 <button class="ui tiny circular twitter icon button show-action-form-btn" id="showActionFormBtn" ng-click="showActionForm = !showActionForm" ng-init="showActionForm = false;">
                     <i class="plus icon"></i>
                 </button>
@@ -190,16 +190,16 @@ a.item.at-menu-item.popup-item.active {
                 <form class="ui form">
                     <div class="field">
                         <select class="ui  dropdown" ng-model="selectedActionType" id="actionTypeDropdown" ng-options="key as value for (key , value) in allActionsList">
-                            <option value="">select action</option>
+                            <option value="">{{labels.frmelmnts.lbl.sidebarSettings.selectAction || "select action"}}</option>
                         </select>
                     </div>
                     <div class="field">
                         <select class="ui  dropdown" ng-model="selectedActionTarget" ng-options="key as value for (key , value) in actionTargetObject" id="actionTargetDropdown">
-                            <option value="">select target</option>
+                            <option value="">{{labels.frmelmnts.lbl.sidebarSettings.selectTarget || "select target"}}</option>
                         </select>
                     </div>
                     <div class="field">
-                        <button class="ui primary tiny button" ng-disabled="selectedObject.stage || !selectedActionTarget" ng-click="addAction({'command': selectedActionType, 'asset': selectedActionTarget}); showActionForm = false;" id="addActionBtn">Add</button>
+                        <button class="ui primary tiny button" ng-disabled="selectedObject.stage || !selectedActionTarget" ng-click="addAction({'command': selectedActionType, 'asset': selectedActionTarget}); showActionForm = false;" id="addActionBtn">{{labels.frmelmnts.lbl.sidebarSettings.addAction || "Add"}}</button>
                     </div>
                 </form>
             </div>
@@ -207,8 +207,8 @@ a.item.at-menu-item.popup-item.active {
         <table class="ui selectable small table" ng-show="currentObject.actions">
             <thead>
                 <tr>
-                    <th>Action</th>
-                    <th>Target</th>
+                    <th>{{labels.frmelmnts.lbl.sidebarSettings.action || "Action"}}</th>
+                    <th>{{labels.frmelmnts.lbl.sidebarSettings.target || "Target"}}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -228,8 +228,8 @@ a.item.at-menu-item.popup-item.active {
         <table class="ui table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Value</th>
+                    <th>{{labels.frmelmnts.lbl.sidebarSettings.name || "Name"}}</th>
+                    <th>{{labels.frmelmnts.lbl.sidebarSettings.value || "Value"}}</th>
                 </tr>
             </thead>
             <tbody>

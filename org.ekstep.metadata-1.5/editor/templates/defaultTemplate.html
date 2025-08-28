@@ -202,9 +202,9 @@
                 <!-- ACTION SECTION LAYOUT -->
                 <div class="actions fixed-footer">
                     <div class="ui buttons ">
-                        <button id="closePopUp " class="ui orange button" ng-class="{'disabled':!editMode}" type="button " ng-click="cancel()">Cancel</button>
+                        <button id="closePopUp " class="ui orange button" ng-class="{'disabled':!editMode}" type="button " ng-click="cancel()">{{labels.frmelmnts.lbl.cancel || 'Cancel'}}</button>
                         <div class="or "></div>
-                        <button class="ui blue button " type="button " ng-class="{'disabled':!editMode}" ng-click="success(undefined, {target: '#metadataForm',form:metaForm})">Save</button>
+                        <button class="ui blue button " type="button " ng-class="{'disabled':!editMode}" ng-click="success(undefined, {target: '#metadataForm',form:metaForm})">{{labels.frmelmnts.lbl.save || 'Save'}}</button>
                     </div>
                 </div>
             </div>

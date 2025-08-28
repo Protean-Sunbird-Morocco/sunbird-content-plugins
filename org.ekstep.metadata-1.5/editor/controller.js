@@ -26,7 +26,8 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
     /**
      * @property       - Default error message for the fields
      */
-    $scope.DEFAULT_ERROR_MESSAGE = 'Invalid Input'
+    $scope.labels = ecEditor.getConfig('resourceBundles') || {};
+    $scope.DEFAULT_ERROR_MESSAGE = $scope.labels.frmelmnts.lbl.invalidInput || 'Invalid Input'
 
     /**
      * @property        - Form configurations which should contains the 'framework, config, resourceBundle' information
@@ -59,12 +60,12 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
     /**
      * 
      */
-    $scope.headerMessage = 'Edit Details'
+    $scope.headerMessage = $scope.labels.frmelmnts.lbl.editDetails || 'Edit Details'
 
     /**
      * 
      */
-    $scope.validationErrorMessage = 'Please provide all required details';
+    $scope.validationErrorMessage = $scope.labels.frmelmnts.lbl.provideRequiredDetails || 'Please provide all required details';
 
     /**
      * @description          - Which is used to dispatch an event.
@@ -325,7 +326,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 } else {
                     console.error("Fails to save the data", err);
                     ecEditor.dispatchEvent("org.ekstep.toaster:error", {
-                        message: 'Unable to update the content, Please try again!',
+                        message: $scope.labels.frmelmnts.lbl.unableToUpdateContentPleaseTryAgainLater || 'Unable to update the content, Please try again!',
                         position: 'topCenter',
                         icon: 'fa fa-warning'
                     });
@@ -536,7 +537,7 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
             }
             $scope.editMode = config.editMode;
             if (!$scope.editMode) {
-                $scope.headerMessage = 'View Details'
+                $scope.headerMessage = $scope.labels.frmelmnts.lbl.viewDetails || 'View Details'
             }
             var field = undefined;
             _.forEach($scope.fields, function(value, key) {
@@ -610,7 +611,34 @@ angular.module('org.ekstep.metadataform', []).controller('metadataForm', ['$scop
                 $scope.contentMeta['creators'] = null;
             }
             var layoutConfigurations = $scope.getLayoutConfigurations();
+            var labels = ecEditor.getConfig('resourceBundles') || {};
+            var labelMap = {
+                name: { label: 'name', placeholder: 'labelNamePlaceHolder' },
+                description: { label: 'description', placeholder: 'labelDescriptionPlaceHolder' },
+                organisation: { label: 'organisation', placeholder: 'labelOrganizationPlaceHolder' },
+                language: { label: 'language', placeholder: 'labelLanguagePlaceHolder' },
+                category: { label: 'category', placeholder: 'labelCategoryPlaceHolder' },
+                qlevel: { label: 'level', placeholder: 'labelLevelPlaceHolder' },
+                max_score: { label: 'max_score', placeholder: 'labelMaxScorePlaceHolder' }
+                // Add more mappings as needed
+            };
+            _.forEach(layoutConfigurations.fixedLayout, function(field) {
+                var map = labelMap[field.code];
+                if (map) {
+                    // Use the translation if it exists, otherwise keep the original
+                    field.label = labels.frmelmnts.lbl.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.frmelmnts.lbl.dynamicForm[map.placeholder] || field.placeholder;
+                }
+            });
             $scope.fixedLayoutConfigurations = _.uniqBy(layoutConfigurations.fixedLayout, 'code');
+            _.forEach(layoutConfigurations.dynamicLayout, function(field) {
+                var map = labelMap[field.code];
+                if (map) {
+                    // Use the translation if it exists, otherwise keep the original
+                    field.label = labels.frmelmnts.lbl.dynamicForm[map.label] || field.label;
+                    field.placeholder = labels.frmelmnts.lbl.dynamicForm[map.placeholder] || field.placeholder;
+                }
+            });
             $scope.dynamicLayoutConfigurations = _.sortBy(_.uniqBy(layoutConfigurations.dynamicLayout, 'code'), 'index');
             $scope.mapMasterCategoryList($scope.fields);
         }
